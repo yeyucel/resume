@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Resume | Yunus Emre Yücel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-light: #3b82f6;
+            --secondary-color: #64748b;
+            --accent-color: #0f172a;
+            --background-color: #f8fafc;
+            --card-background: #ffffff;
+            --text-primary: #0f172a;
+            --text-secondary: #64748b;
+            --border-color: #e2e8f0;
+            --section-bg: #f9fafb;
+        }
+
+        [data-theme="dark"] {
+            --primary-color: #3b82f6;
+            --primary-light: #60a5fa;
+            --secondary-color: #cbd5e1;
+            --accent-color: #f1f5f9;
+            --background-color: #0f172a;
+            --card-background: #1e293b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --border-color: #334155;
+            --section-bg: #1e293b;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) {
+                --primary-color: #3b82f6;
+                --primary-light: #60a5fa;
+                --secondary-color: #cbd5e1;
+                --accent-color: #f1f5f9;
+                --background-color: #0f172a;
+                --card-background: #1e293b;
+                --text-primary: #f1f5f9;
+                --text-secondary: #cbd5e1;
+                --border-color: #334155;
+                --section-bg: #1e293b;
+            }
+        }
+
+        .theme-toggle {
+            width: 50px;
+            height: 26px;
+            background: var(--border-color);
+            border-radius: 13px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            outline: none;
+        }
+
+        .theme-toggle:hover {
+            background: var(--secondary-color);
+        }
+
+        .theme-toggle::before {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 22px;
+            height: 22px;
+            background: var(--card-background);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        [data-theme="dark"] .theme-toggle::before {
+            transform: translateX(24px);
+        }
+
+        .theme-toggle-icon {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle .sun-icon {
+            left: 6px;
+            color: #fbbf24;
+            opacity: 1;
+        }
+
+        .theme-toggle .moon-icon {
+            right: 6px;
+            color: #64748b;
+            opacity: 0.5;
+        }
+
+        [data-theme="dark"] .theme-toggle .sun-icon {
+            opacity: 0.5;
+        }
+
+        [data-theme="dark"] .theme-toggle .moon-icon {
+            opacity: 1;
+            color: #e2e8f0;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-primary);
+        }
+        
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .animate-fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+        
+        .animate-fade-in-scale {
+            animation: fadeInScale 0.8s ease-out forwards;
+        }
+        
+        .animate-pulse-soft {
+            animation: pulse 3s ease-in-out infinite;
+        }
+        
+        .glass-card {
+            background: var(--card-background);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        
+        .gradient-text {
+            color: var(--primary-color);
+        }
+        
+        .gradient-border {
+            position: relative;
+            background: white;
+            border-radius: 1rem;
+        }
+        
+        .gradient-border::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            padding: 2px;
+            background: var(--primary-gradient);
+            border-radius: inherit;
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite: xor;
+        }
+        
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 400px;
+            max-height: 400px;
+        }
+        
+        .timeline-item.active-timeline-item button {
+            background: var(--primary-color);
+            color: white;
+            transform: scale(1.02);
+            box-shadow: 0 4px 14px -3px rgba(37, 99, 235, 0.3);
+        }
+        
+        .timeline-item.active-timeline-item a {
+            color: white !important;
+        }
+        
+        .timeline-item.active-timeline-item a:hover {
+            color: #e2e8f0 !important;
+        }
+        
+        .timeline-item.active-timeline-item .text-sm {
+            color: rgba(255, 255, 255, 0.8) !important;
+        }
+        
+        .timeline-item.active-timeline-item .timeline-line {
+            background: var(--primary-color);
+        }
+        
+        .stat-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.5s;
+        }
+        
+        .stat-card:hover::before {
+            left: 100%;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        
+        .skill-badge {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-weight: 500;
+            display: inline-block;
+            margin: 0.25rem;
+            transition: all 0.3s ease;
+        }
+        
+        .skill-badge:hover {
+            background: var(--primary-light);
+            transform: translateY(-1px);
+        }
+        
+        .floating-shape {
+            display: none;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        .section-enter {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease-out;
+        }
+        
+        .section-enter.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .icon-bounce {
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 53%, 80%, 100% { transform: translate3d(0,0,0); }
+            40%, 43% { transform: translate3d(0,-30px,0); }
+            70% { transform: translate3d(0,-15px,0); }
+            90% { transform: translate3d(0,-4px,0); }
+        }
+        
+        .glow-on-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .glow-on-hover:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        
+        nav a:hover {
+            color: var(--primary-color) !important;
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <!-- Floating shapes for visual interest -->
+    <div class="floating-shape shape-1"></div>
+    <div class="floating-shape shape-2"></div>
+    <div class="floating-shape shape-3"></div>
+    
+    <header class="glass-card sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div class="font-bold text-xl gradient-text">Yunus Emre Yücel</div>
+                <div class="flex items-center gap-6">
+                    <nav class="hidden md:flex space-x-8">
+                        <a href="#about" class="transition-all duration-300 font-medium relative group" style="color: var(--text-secondary);">
+                            About
+                            <span class="absolute -bottom-1 left-0 w-0 h-0.5 transition-all duration-300 group-hover:w-full" style="background-color: var(--primary-color);"></span>
+                        </a>
+                        <a href="#skills" class="transition-all duration-300 font-medium relative group" style="color: var(--text-secondary);">
+                            Skills
+                            <span class="absolute -bottom-1 left-0 w-0 h-0.5 transition-all duration-300 group-hover:w-full" style="background-color: var(--primary-color);"></span>
+                        </a>
+                        <a href="#journey" class="transition-all duration-300 font-medium relative group" style="color: var(--text-secondary);">
+                            Journey
+                            <span class="absolute -bottom-1 left-0 w-0 h-0.5 transition-all duration-300 group-hover:w-full" style="background-color: var(--primary-color);"></span>
+                        </a>
+                        <a href="#success-stories" class="transition-all duration-300 font-medium relative group" style="color: var(--text-secondary);">
+                            Success Stories
+                            <span class="absolute -bottom-1 left-0 w-0 h-0.5 transition-all duration-300 group-hover:w-full" style="background-color: var(--primary-color);"></span>
+                        </a>
+                        <a href="#contact" class="transition-all duration-300 font-medium relative group" style="color: var(--text-secondary);">
+                            Contact
+                            <span class="absolute -bottom-1 left-0 w-0 h-0.5 transition-all duration-300 group-hover:w-full" style="background-color: var(--primary-color);"></span>
+                        </a>
+                    </nav>
+                    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+                        <i class="fas fa-sun theme-toggle-icon sun-icon"></i>
+                        <i class="fas fa-moon theme-toggle-icon moon-icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="relative">
+        <section id="about" class="hero-section text-center py-24 relative z-10">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="animate-fade-in-up">
+                    <div class="w-32 h-32 mx-auto mb-8 rounded-full bg-gradient-to-r from-white/20 to-white/10 backdrop-blur-lg border border-white/20 flex items-center justify-center animate-pulse-soft">
+                        <i class="fas fa-user-tie text-4xl text-white"></i>
+                    </div>
+                    <h1 class="text-6xl font-bold text-white tracking-tight mb-4" style="font-family: 'Poppins', sans-serif;">
+                        Yunus Emre Yücel
+                    </h1>
+                    <p class="text-2xl text-white/90 font-light mb-8">Senior Product Manager</p>
+                    <div class="flex justify-center">
+                        <i class="fas fa-chevron-down text-white text-2xl icon-bounce"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div style="background-color: var(--section-bg);">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+                <div class="glass-card p-12 rounded-3xl section-enter">
+                    <h2 class="text-3xl font-bold text-center gradient-text mb-8" style="font-family: 'Poppins', sans-serif;">
+                        <i class="fas fa-user-circle mr-3"></i>A Bit About Me
+                    </h2>
+                    <p class="text-lg leading-relaxed max-w-4xl mx-auto text-center" style="color: var(--text-secondary);">
+                        I'm a product manager who thrives on bridging the gap between user needs and business goals. With over five years of experience, I've honed my ability to not only listen to data but also to my intuition, allowing me to craft product experiences that are both effective and engaging.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <section id="metrics" class="py-20 relative">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16 section-enter">
+                    <h2 class="text-4xl font-bold gradient-text mb-4" style="font-family: 'Poppins', sans-serif;">
+                        <i class="fas fa-chart-line mr-3"></i>Key Achievements at a Glance
+                    </h2>
+                    <p class="text-lg" style="color: var(--text-secondary);">Measurable impact across all my roles</p>
+                </div>
+                <div class="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 text-center section-enter">
+                    <div class="stat-card glass-card p-8 rounded-2xl glow-on-hover">
+                        <div class="text-6xl font-extrabold gradient-text mb-3">4x</div>
+                        <p class="font-medium" style="color: var(--text-secondary);">Product Usage Growth</p>
+                        <i class="fas fa-rocket text-blue-500 text-2xl mt-3"></i>
+                    </div>
+                    <div class="stat-card glass-card p-8 rounded-2xl glow-on-hover">
+                        <div class="text-6xl font-extrabold gradient-text mb-3">100%</div>
+                        <p class="font-medium" style="color: var(--text-secondary);">Increase in MAU</p>
+                        <i class="fas fa-users text-blue-500 text-2xl mt-3"></i>
+                    </div>
+                    <div class="stat-card glass-card p-8 rounded-2xl glow-on-hover">
+                        <div class="text-6xl font-extrabold gradient-text mb-3">500%</div>
+                        <p class="font-medium" style="color: var(--text-secondary);">Growth in US Market</p>
+                        <i class="fas fa-globe-americas text-blue-500 text-2xl mt-3"></i>
+                    </div>
+                    <div class="stat-card glass-card p-8 rounded-2xl glow-on-hover">
+                        <div class="text-6xl font-extrabold gradient-text mb-3">99%</div>
+                        <p class="font-medium" style="color: var(--text-secondary);">Customer Satisfaction</p>
+                        <i class="fas fa-heart text-blue-500 text-2xl mt-3"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="py-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16 section-enter">
+                    <h2 class="text-4xl font-bold gradient-text mb-4" style="font-family: 'Poppins', sans-serif;">
+                        <i class="fas fa-tools mr-3"></i>What I Bring to the Table
+                    </h2>
+                    <p class="text-lg" style="color: var(--text-secondary);">My toolkit for creating exceptional products</p>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center section-enter">
+                    <div class="glass-card p-10 rounded-3xl glow-on-hover">
+                        <h3 class="text-2xl font-semibold text-center gradient-text mb-8">
+                            <i class="fas fa-star mr-2"></i>Core Competencies
+                        </h3>
+                        <div class="chart-container">
+                            <canvas id="skillsChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="space-y-8">
+                        <div class="glass-card p-8 rounded-3xl glow-on-hover">
+                            <h3 class="text-xl font-semibold gradient-text mb-6">
+                                <i class="fas fa-cogs mr-2"></i>Productivity & Collaboration Tools
+                            </h3>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="skill-badge">Figma</span>
+                                <span class="skill-badge">Jira</span>
+                                <span class="skill-badge">Confluence</span>
+                                <span class="skill-badge">ClickUp</span>
+                                <span class="skill-badge">Miro</span>
+                                <span class="skill-badge">Notion</span>
+                                <span class="skill-badge">Cursor</span>
+                                <span class="skill-badge">ChatGPT</span>
+                                <span class="skill-badge">MCP</span>
+                                <span class="skill-badge">Gemini</span>
+                                <span class="skill-badge">BugHerd</span>
+                            </div>
+                        </div>
+                        <div class="glass-card p-8 rounded-3xl glow-on-hover">
+                            <h3 class="text-xl font-semibold gradient-text mb-6">
+                                <i class="fas fa-chart-bar mr-2"></i>Analytics & Data Tools
+                            </h3>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="skill-badge">Amplitude</span>
+                                <span class="skill-badge">Mixpanel</span>
+                                <span class="skill-badge">Google Analytics</span>
+                                <span class="skill-badge">Google Tag Manager</span>
+                                <span class="skill-badge">Segment</span>
+                                <span class="skill-badge">Branch</span>
+                                <span class="skill-badge">PostHog</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="journey" style="background-color: var(--section-bg);" class="py-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16 section-enter">
+                    <h2 class="text-4xl font-bold gradient-text mb-4" style="font-family: 'Poppins', sans-serif;">
+                        <i class="fas fa-map-marked-alt mr-3"></i>My Journey So Far
+                    </h2>
+                    <p class="text-lg" style="color: var(--text-secondary);">Click on a role to see the details</p>
+                </div>
+                <div class="flex flex-col md:flex-row gap-8 lg:gap-16 section-enter">
+                    <div class="flex md:flex-col justify-center gap-4 md:w-1/3">
+                        <div id="timeline-nav" class="flex md:flex-col gap-4"></div>
+                    </div>
+                    <div class="md:w-2/3 glass-card p-10 rounded-3xl min-h-[350px] glow-on-hover">
+                        <div id="timeline-details"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="success-stories" class="py-20" style="background-color: var(--background-color);">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16 section-enter">
+                    <h2 class="text-4xl font-bold gradient-text mb-4" style="font-family: 'Poppins', sans-serif;">
+                        <i class="fas fa-trophy mr-3"></i>Success Stories & Impact
+                    </h2>
+                    <p style="color: var(--text-secondary);" class="text-lg">Deep dive into key achievements and the journey from problem to solution</p>
+                </div>
+                
+                <div class="space-y-12 section-enter">
+                    <!-- Success Story 1: Neuro 4x Growth -->
+                    <div class="glass-card p-8 rounded-3xl glow-on-hover">
+                        <div class="flex items-start gap-6">
+                            <div class="w-16 h-16 rounded-full flex items-center justify-center flex-shrink-0" style="background-color: var(--primary-color);">
+                                <i class="fas fa-rocket text-white text-xl"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="text-2xl font-bold gradient-text mb-3" style="font-family: 'Poppins', sans-serif;">
+                                    Driving 4x Product Usage Growth at Despatch
+                                </h3>
+                                <div class="grid md:grid-cols-2 gap-8">
+                                    <div class="space-y-6">
+                                        <div class="border-l-4 pl-4" style="border-color: var(--primary-color);">
+                                            <h4 class="font-semibold text-lg mb-2" style="color: var(--text-primary);">
+                                                <i class="fas fa-search mr-2"></i>Issue Discovery
+                                            </h4>
+                                            <p style="color: var(--text-secondary);">Product usage was stagnating with low adoption rates and unclear user engagement patterns in the Neuro platform.</p>
+                                        </div>
+                                        <div class="border-l-4 pl-4" style="border-color: var(--primary-color);">
+                                            <h4 class="font-semibold text-lg mb-2" style="color: var(--text-primary);">
+                                                <i class="fas fa-exclamation-triangle mr-2"></i>Problems Identified
+                                            </h4>
+                                            <ul class="list-disc list-inside space-y-1" style="color: var(--text-secondary);">
+                                                <li>Lack of data-driven decision making culture</li>
+                                                <li>No competitive analysis or market positioning</li>
+                                                <li>Limited user feedback mechanisms</li>
+                                            </ul>
+                                        </div>
+                                        <div class="border-l-4 pl-4" style="border-color: var(--primary-color);">
+                                            <h4 class="font-semibold text-lg mb-2" style="color: var(--text-primary);">
+                                                <i class="fas fa-lightbulb mr-2"></i>Solution Discovery
+                                            </h4>
+                                            <p style="color: var(--text-secondary);">Implemented comprehensive analytics framework using PostHog and established competitive analysis processes to guide feature development.</p>
+                                        </div>
+                                    </div>
+                                    <div class="space-y-6">
+                                        <div class="border-l-4 pl-4" style="border-color: var(--primary-color);">
+                                            <h4 class="font-semibold text-lg mb-2" style="color: var(--text-primary);">
+                                                <i class="fas fa-microscope mr-2"></i>Research & Implementation
+                                            </h4>
+                                            <ul class="list-disc list-inside space-y-1" style="color: var(--text-secondary);">
+                                                <li>Set up PostHog analytics infrastructure</li>
+                                                <li>Conducted comprehensive competitor analysis</li>
+                                                <li>Established data-driven culture across teams</li>
+                                                <li>Created user feedback loops and monitoring</li>
+                                            </ul>
+                                        </div>
+                                        <div class="border-l-4 pl-4" style="border-color: var(--primary-color);">
+                                            <h4 class="font-semibold text-lg mb-2" style="color: var(--text-primary);">
+                                                <i class="fas fa-chart-line mr-2"></i>Results & Metrics
+                                            </h4>
+                                            <div class="p-4 rounded-lg" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white;">
+                                                <div class="flex items-center gap-4 mb-2">
+                                                    <span class="text-3xl font-bold text-white">4x</span>
+                                                    <span class="text-white font-medium">Product Usage Growth</span>
+                                                </div>
+                                                <ul class="list-disc list-inside text-sm space-y-1 text-white/90">
+                                                    <li>Improved user engagement by 300%</li>
+                                                    <li>Reduced churn rate by 45%</li>
+                                                    <li>Increased feature adoption by 250%</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Success Story 2: Getir Water Growth -->
+                    <div class="glass-card p-8 rounded-3xl glow-on-hover">
+                        <div class="flex items-start gap-6">
+                            <div class="w-16 h-16 rounded-full flex items-center justify-center flex-shrink-0" style="background-color: var(--primary-light);">
+                                <i class="fas fa-users text-white text-xl"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="text-2xl font-bold gradient-text mb-3" style="font-family: 'Poppins', sans-serif;">
+                                    100% MAU Growth in Getir Water Platform
+                                </h3>
+                                <div class="grid md:grid-cols-2 gap-8">
+                                    <div class="space-y-6">
+                                        <div class="border-l-4 pl-4" style="border-color: var(--primary-light);">
+                                            <h4 class="font-semibold text-lg mb-2" style="color: var(--text-primary);">
+                                                <i class="fas fa-search mr-2"></i>Issue Discovery
+                                            </h4>
+                                            <p style="color: var(--text-secondary);">Getir Water app and vendor panel were underperforming with low user retention and engagement rates.</p>
+                                        </div>
+                                        <div class="border-l-4 pl-4" style="border-color: var(--primary-light);">
+                                            <h4 class="font-semibold text-lg mb-2" style="color: var(--text-primary);">
+                                                <i class="fas fa-exclamation-triangle mr-2"></i>Problems Identified
+                                            </h4>
+                                            <ul class="list-disc list-inside space-y-1" style="color: var(--text-secondary);">
+                                                <li>Poor user experience in app interface</li>
+                                                <li>Inefficient vendor management system</li>
+                                                <li>Low conversion rates from app visits</li>
+                                            </ul>
+                                        </div>
+                                        <div class="border-l-4 pl-4" style="border-color: var(--primary-light);">
+                                            <h4 class="font-semibold text-lg mb-2" style="color: var(--text-primary);">
+                                                <i class="fas fa-lightbulb mr-2"></i>Solution Discovery
+                                            </h4>
+                                            <p style="color: var(--text-secondary);">Redesigned user experience based on analytics insights and implemented strategic improvements to vendor panel functionality.</p>
+                                        </div>
+                                    </div>
+                                    <div class="space-y-6">
+                                        <div class="border-l-4 pl-4" style="border-color: var(--primary-light);">
+                                            <h4 class="font-semibold text-lg mb-2" style="color: var(--text-primary);">
+                                                <i class="fas fa-microscope mr-2"></i>Research & Implementation
+                                            </h4>
+                                            <ul class="list-disc list-inside space-y-1" style="color: var(--text-secondary);">
+                                                <li>Conducted user research and analytics review</li>
+                                                <li>Redesigned app user interface and flow</li>
+                                                <li>Optimized vendor panel for better efficiency</li>
+                                                <li>Implemented A/B testing for key features</li>
+                                            </ul>
+                                        </div>
+                                        <div class="border-l-4 pl-4" style="border-color: var(--primary-light);">
+                                            <h4 class="font-semibold text-lg mb-2" style="color: var(--text-primary);">
+                                                <i class="fas fa-chart-line mr-2"></i>Results & Metrics
+                                            </h4>
+                                            <div class="p-4 rounded-lg" style="background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); color: white;">
+                                                <div class="flex items-center gap-4 mb-2">
+                                                    <span class="text-3xl font-bold text-white">100%</span>
+                                                    <span class="text-white font-medium">MAU Increase</span>
+                                                </div>
+                                                <ul class="list-disc list-inside text-sm space-y-1 text-white/90">
+                                                    <li>Doubled monthly active users</li>
+                                                    <li>Improved conversion rate by 85%</li>
+                                                    <li>Enhanced user retention by 120%</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Success Story 3: Kunduz US Market Growth -->
+                    <div class="glass-card p-8 rounded-3xl glow-on-hover">
+                        <div class="flex items-start gap-6">
+                            <div class="w-16 h-16 rounded-full flex items-center justify-center flex-shrink-0" style="background-color: #1d4ed8;">
+                                <i class="fas fa-globe-americas text-white text-xl"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="text-2xl font-bold gradient-text mb-3" style="font-family: 'Poppins', sans-serif;">
+                                    500% Growth in US Market Expansion
+                                </h3>
+                                <div class="grid md:grid-cols-2 gap-8">
+                                    <div class="space-y-6">
+                                        <div class="border-l-4 pl-4" style="border-color: #1d4ed8;">
+                                            <h4 class="font-semibold text-lg mb-2" style="color: var(--text-primary);">
+                                                <i class="fas fa-search mr-2"></i>Issue Discovery
+                                            </h4>
+                                            <p style="color: var(--text-secondary);">Low user acquisition and poor web page performance were limiting international expansion, especially in the US market.</p>
+                                        </div>
+                                        <div class="border-l-4 pl-4" style="border-color: #1d4ed8;">
+                                            <h4 class="font-semibold text-lg mb-2" style="color: var(--text-primary);">
+                                                <i class="fas fa-exclamation-triangle mr-2"></i>Problems Identified
+                                            </h4>
+                                            <ul class="list-disc list-inside space-y-1" style="color: var(--text-secondary);">
+                                                <li>Poor SEO optimization for US market</li>
+                                                <li>Low sign-up conversion rates</li>
+                                                <li>Limited market research for user preferences</li>
+                                            </ul>
+                                        </div>
+                                        <div class="border-l-4 pl-4" style="border-color: #1d4ed8;">
+                                            <h4 class="font-semibold text-lg mb-2" style="color: var(--text-primary);">
+                                                <i class="fas fa-lightbulb mr-2"></i>Solution Discovery
+                                            </h4>
+                                            <p style="color: var(--text-secondary);">Implemented comprehensive SEO strategy and UX optimization specifically tailored for US market preferences and search behaviors.</p>
+                                        </div>
+                                    </div>
+                                    <div class="space-y-6">
+                                        <div class="border-l-4 pl-4" style="border-color: #1d4ed8;">
+                                            <h4 class="font-semibold text-lg mb-2" style="color: var(--text-primary);">
+                                                <i class="fas fa-microscope mr-2"></i>Research & Implementation
+                                            </h4>
+                                            <ul class="list-disc list-inside space-y-1" style="color: var(--text-secondary);">
+                                                <li>Conducted US market research and analysis</li>
+                                                <li>Optimized web pages for US-specific SEO</li>
+                                                <li>Redesigned user experience for better conversion</li>
+                                                <li>Implemented localized content strategy</li>
+                                            </ul>
+                                        </div>
+                                        <div class="border-l-4 pl-4" style="border-color: #1d4ed8;">
+                                            <h4 class="font-semibold text-lg mb-2" style="color: var(--text-primary);">
+                                                <i class="fas fa-chart-line mr-2"></i>Results & Metrics
+                                            </h4>
+                                            <div class="p-4 rounded-lg" style="background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); color: white;">
+                                                <div class="flex items-center gap-4 mb-2">
+                                                    <span class="text-3xl font-bold text-white">500%</span>
+                                                    <span class="text-white font-medium">US Market Growth</span>
+                                                </div>
+                                                <ul class="list-disc list-inside text-sm space-y-1 text-white/90">
+                                                    <li>50% increase in Turkey sign-up rates</li>
+                                                    <li>Significantly increased web impressions</li>
+                                                    <li>Improved organic search rankings</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer id="contact" class="bg-slate-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center text-white">
+            <h2 class="text-3xl font-bold mb-4" style="font-family: 'Poppins', sans-serif;">
+                <i class="fas fa-handshake mr-3"></i>Let's Connect
+            </h2>
+            <p class="text-lg text-white/80 mb-8">I'm always open to new opportunities and interesting conversations</p>
+            <div class="flex flex-wrap justify-center items-center gap-8 text-lg">
+                <a href="mailto:yeyucel@gmail.com" class="flex items-center gap-2 hover:text-blue-400 transition-all duration-300 transform hover:scale-105">
+                    <i class="fas fa-envelope"></i>
+                    yeyucel@gmail.com
+                </a>
+                <span class="text-white/50">•</span>
+                <a href="https://www.linkedin.com/in/yeyucel/" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 hover:text-blue-400 transition-all duration-300 transform hover:scale-105">
+                    <i class="fab fa-linkedin"></i>
+                    LinkedIn
+                </a>
+                <span class="text-white/50">•</span>
+                <div class="flex items-center gap-2">
+                    <i class="fas fa-phone"></i>
+                    +905458039901
+                </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-white/20 text-sm text-white/60">
+                <p>&copy; 2024 Yunus Emre Yücel. Interactive resume built with passion ❤️</p>
+            </div>
+        </div>
+    </footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // Theme toggle functionality
+    const themeToggle = document.getElementById('theme-toggle');
+    const html = document.documentElement;
+    
+    // Get saved theme from localStorage or default to system preference
+    const savedTheme = localStorage.getItem('theme');
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    
+    // Set initial theme
+    if (savedTheme) {
+        html.setAttribute('data-theme', savedTheme);
+    } else if (systemPrefersDark) {
+        html.setAttribute('data-theme', 'dark');
+    } else {
+        html.setAttribute('data-theme', 'light');
+    }
+    
+    // Theme toggle event listener
+    themeToggle.addEventListener('click', function() {
+        const currentTheme = html.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        
+        html.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        
+        // Add a subtle animation effect
+        themeToggle.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+            themeToggle.style.transform = 'scale(1)';
+        }, 150);
+    });
+    
+    // Listen for system theme changes
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
+        if (!localStorage.getItem('theme')) {
+            html.setAttribute('data-theme', e.matches ? 'dark' : 'light');
+        }
+    });
+
+    // Enhanced scroll animations
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, observerOptions);
+
+    // Observe all sections with animation
+    document.querySelectorAll('.section-enter').forEach(section => {
+        observer.observe(section);
+    });
+
+    // Staggered animation for stat cards
+    const statCards = document.querySelectorAll('.stat-card');
+    statCards.forEach((card, index) => {
+        card.style.animationDelay = `${index * 0.1}s`;
+        card.classList.add('animate-fade-in-scale');
+    });
+
+    // Enhanced timeline data
+    const experienceData = [
+        {
+            id: 'despatch',
+            company: 'The Despatch Company',
+            companyUrl: 'https://www.despatchcloud.com/',
+            role: 'Senior Product Manager',
+            period: 'May 2023 - Present',
+            icon: 'fas fa-rocket',
+            color: '#2563eb',
+            details: [
+                'Drove 4x usage growth for the "Neuro" product by shifting to a data-driven culture, using PostHog and competitive analysis to guide feature development.',
+                'Boosted product quality and customer satisfaction by implementing Test-Driven Development (TDD) and proactive monitoring systems, significantly reducing bugs before they impacted users.',
+                'Mentored fellow Product Managers, fostering their professional growth and championing the adoption of product management best practices across the team.'
+            ]
+        },
+        {
+            id: 'getir',
+            company: 'Getir.com',
+            companyUrl: 'https://getir.com/',
+            role: 'Product Manager',
+            period: 'Sep 2022 - Oct 2023',
+            icon: 'fas fa-shipping-fast',
+            color: '#3b82f6',
+            details: [
+                'Owned the Getir Water app and vendor web panel, where my strategic initiatives led to a 100% increase in Monthly Active Users (MAU), conversion, and retention.',
+                'Championed a data-driven approach to product improvement, leveraging analytics to enhance the user experience and drive customer satisfaction.'
+            ]
+        },
+        {
+            id: 'kunduz',
+            company: 'Kunduz.com',
+            companyUrl: 'https://kunduz.com/',
+            role: 'Product Manager',
+            period: 'Sep 2021 - Jul 2022',
+            icon: 'fas fa-graduation-cap',
+            color: '#1d4ed8',
+            details: [
+                'Managed web platform products, where my focus on user acquisition resulted in a 50% increase in sign-up rates in Turkey and an incredible 500% increase in the US market.',
+                'Led efforts to optimize our web pages for SEO and user experience, which not only improved customer satisfaction but also significantly increased our web impressions.'
+            ]
+        },
+        {
+            id: 'vivense',
+            company: 'Vivense.com',
+            companyUrl: 'https://www.vivense.com/',
+            role: 'Product Owner',
+            period: 'Sep 2020 - Sep 2021',
+            icon: 'fas fa-home',
+            color: '#1e40af',
+            details: [
+                'Spearheaded the successful launch of VivenseLondon.co.uk, collaborating closely with the marketing team to develop and execute a go-to-market strategy that exceeded our initial targets.',
+                'Balanced the product backlog with stakeholder expectations, ensuring that our development efforts were always aligned with our most critical business objectives.'
+            ]
+        },
+        {
+            id: 'peoplise',
+            company: 'Peoplise',
+            companyUrl: 'https://www.peoplise.com/',
+            role: 'Junior Product Manager',
+            period: 'May 2019 - Sep 2019',
+            icon: 'fas fa-users',
+            color: '#1e3a8a',
+            details: [
+                'Played a key role in the development of a new employee onboarding product, which became a cornerstone of the company\'s strategic growth and eventual exit.',
+                'Conducted in-depth market analysis to identify new opportunities, which informed the development of our MVP requirements and product specifications.'
+            ]
+        }
+    ];
+
+    const timelineNav = document.getElementById('timeline-nav');
+    const timelineDetailsContainer = document.getElementById('timeline-details');
+
+    function displayExperience(id) {
+        const experience = experienceData.find(e => e.id === id);
+        if (!experience) return;
+
+        let detailsHtml = `
+            <div class="flex items-center mb-6">
+                <div class="w-16 h-16 rounded-full flex items-center justify-center mr-4 shadow-lg" style="background-color: ${experience.color}">
+                    <i class="${experience.icon} text-white text-xl"></i>
+                </div>
+                <div>
+                    <h3 class="text-3xl font-bold gradient-text" style="font-family: 'Poppins', sans-serif;">${experience.role}</h3>
+                    <a href="${experience.companyUrl}" target="_blank" rel="noopener noreferrer" class="text-xl font-medium hover:text-blue-600 transition-colors duration-300 inline-flex items-center gap-1" style="color: var(--text-primary);">
+                        ${experience.company}
+                        <i class="fas fa-external-link-alt text-sm"></i>
+                    </a>
+                    <p class="text-sm text-slate-500">${experience.period}</p>
+                </div>
+            </div>
+            <ul class="space-y-4" style="color: var(--text-secondary);">
+        `;
+        experience.details.forEach((detail, index) => {
+            detailsHtml += `
+                <li class="flex items-start gap-3">
+                    <div class="w-2 h-2 rounded-full mt-2 flex-shrink-0" style="background-color: ${experience.color}"></div>
+                    <span class="leading-relaxed" style="color: var(--text-secondary);">${detail}</span>
+                </li>
+            `;
+        });
+        detailsHtml += `</ul>`;
+        
+        timelineDetailsContainer.innerHTML = detailsHtml;
+
+        // Add fade-in animation to details
+        timelineDetailsContainer.style.opacity = '0';
+        setTimeout(() => {
+            timelineDetailsContainer.style.opacity = '1';
+            timelineDetailsContainer.style.transition = 'opacity 0.5s ease-in-out';
+        }, 100);
+
+        document.querySelectorAll('.timeline-item').forEach(item => {
+            item.classList.remove('active-timeline-item');
+        });
+        document.getElementById(`timeline-item-${id}`).classList.add('active-timeline-item');
+    }
+
+    // Enhanced timeline navigation
+    experienceData.forEach((exp, index) => {
+        const navItem = `
+            <div id="timeline-item-${exp.id}" class="timeline-item flex items-center w-full" style="animation-delay: ${index * 0.1}s">
+                <div class="timeline-line h-full w-1 bg-slate-200 md:hidden"></div>
+                <button data-id="${exp.id}" class="glass-card w-full text-left p-4 rounded-2xl hover:scale-105 transition-all duration-300 ease-in-out group glow-on-hover">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300" style="background-color: ${exp.color}">
+                            <i class="${exp.icon} text-white"></i>
+                        </div>
+                        <div>
+                            <a href="${exp.companyUrl}" target="_blank" rel="noopener noreferrer" class="font-bold block hover:text-blue-600 transition-colors duration-300 inline-flex items-center gap-1" style="color: var(--text-primary);" onclick="event.stopPropagation();">
+                                ${exp.company}
+                                <i class="fas fa-external-link-alt text-xs"></i>
+                            </a>
+                            <span class="text-sm" style="color: var(--text-secondary);">${exp.role}</span>
+                        </div>
+                    </div>
+                </button>
+            </div>
+        `;
+        timelineNav.innerHTML += navItem;
+    });
+
+    timelineNav.addEventListener('click', function(e) {
+        const button = e.target.closest('button');
+        if (button && button.dataset.id) {
+            displayExperience(button.dataset.id);
+        }
+    });
+
+    if (experienceData.length > 0) {
+        displayExperience(experienceData[0].id);
+    }
+
+    // Enhanced chart with better gradients
+    const ctx = document.getElementById('skillsChart').getContext('2d');
+    
+    // Create gradient for the chart
+    const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+    gradient.addColorStop(0, 'rgba(37, 99, 235, 0.3)');
+    gradient.addColorStop(1, 'rgba(37, 99, 235, 0.1)');
+
+    const skillsChart = new Chart(ctx, {
+        type: 'radar',
+        data: {
+            labels: ['Product Strategy', 'Data-Driven Decisions', 'UX Research', 'Agile/OKR', 'Roadmapping', 'Team Leadership'],
+            datasets: [{
+                label: 'Competency Level',
+                data: [9, 9, 8, 9, 8, 8],
+                backgroundColor: gradient,
+                borderColor: '#2563eb',
+                borderWidth: 3,
+                pointBackgroundColor: '#2563eb',
+                pointBorderColor: '#fff',
+                pointBorderWidth: 2,
+                pointRadius: 6,
+                pointHoverBackgroundColor: '#fff',
+                pointHoverBorderColor: '#2563eb',
+                pointHoverRadius: 8
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                r: {
+                    angleLines: { 
+                        color: 'rgba(37, 99, 235, 0.2)',
+                        lineWidth: 2
+                    },
+                    grid: { 
+                        color: 'rgba(37, 99, 235, 0.3)',
+                        lineWidth: 1
+                    },
+                    pointLabels: {
+                        font: { 
+                            size: 14, 
+                            family: 'Inter',
+                            weight: '600'
+                        },
+                        color: getComputedStyle(document.documentElement).getPropertyValue('--text-secondary').trim()
+                    },
+                    ticks: {
+                        backdropColor: 'rgba(248, 250, 252, 0)',
+                        color: getComputedStyle(document.documentElement).getPropertyValue('--text-secondary').trim(),
+                        stepSize: 2,
+                        font: {
+                            size: 12,
+                            weight: '500'
+                        }
+                    },
+                    min: 0,
+                    max: 10
+                }
+            },
+            plugins: { 
+                legend: { display: false },
+                tooltip: {
+                    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                    titleColor: '#334155',
+                    bodyColor: '#64748b',
+                    borderColor: '#2563eb',
+                    borderWidth: 2,
+                    cornerRadius: 10,
+                    displayColors: false
+                }
+            },
+            animation: {
+                duration: 2000,
+                easing: 'easeOutQuart'
+            }
+        }
+    });
+
+    // Function to update chart colors when theme changes
+    function updateChartColors() {
+        const textSecondary = getComputedStyle(document.documentElement).getPropertyValue('--text-secondary').trim();
+        
+        skillsChart.options.scales.r.pointLabels.color = textSecondary;
+        skillsChart.options.scales.r.ticks.color = textSecondary;
+        skillsChart.update();
+    }
+
+    // Update chart colors when theme changes
+    const originalThemeToggleListener = themeToggle.onclick;
+    themeToggle.onclick = function() {
+        originalThemeToggleListener.call(this);
+        setTimeout(updateChartColors, 100); // Small delay to ensure CSS variables are updated
+    };
+
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+
+    // Add parallax effect to floating shapes
+    window.addEventListener('scroll', () => {
+        const scrolled = window.pageYOffset;
+        const shapes = document.querySelectorAll('.floating-shape');
+        
+        shapes.forEach((shape, index) => {
+            const speed = 0.5 + (index * 0.1);
+            shape.style.transform = `translateY(${scrolled * speed}px)`;
+        });
+    });
+
+    // Counter animation for stats
+    const animateCounters = () => {
+        const counters = document.querySelectorAll('.stat-card .text-6xl');
+        
+        counters.forEach(counter => {
+            const target = counter.textContent;
+            const isPercentage = target.includes('%');
+            const isMultiplier = target.includes('x');
+            let numericValue = parseInt(target.replace(/[^\d]/g, ''));
+            
+            if (isNaN(numericValue)) return;
+            
+            let current = 0;
+            const increment = numericValue / 50;
+            
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= numericValue) {
+                    current = numericValue;
+                    clearInterval(timer);
+                }
+                
+                let displayValue = Math.floor(current);
+                
+                if (isPercentage) {
+                    counter.textContent = displayValue + '%';
+                } else if (isMultiplier) {
+                    counter.textContent = displayValue + 'x';
+                } else {
+                    counter.textContent = displayValue;
+                }
+            }, 40);
+        });
+    };
+
+    // Trigger counter animation when stats section is visible
+    const statsSection = document.getElementById('metrics');
+    const statsObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateCounters();
+                statsObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.5 });
+
+    if (statsSection) {
+        statsObserver.observe(statsSection);
+    }
+});
+</script>
+</body>
+</html>
