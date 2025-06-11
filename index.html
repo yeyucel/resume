@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yunus Emre Yücel - Senior Product Manager</title>
+    <title>Yunus Emre Yücel - Product Strategy & Growth Leader</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -272,6 +272,53 @@
             margin-bottom: 0.5rem;
             text-shadow: 0 2px 4px rgba(0,0,0,0.3);
             line-height: 1;
+            animation: countUp 2s ease-out forwards;
+        }
+
+        /* Animated counter keyframes */
+        @keyframes countUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Metric visualization circles */
+        .metric-circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: conic-gradient(var(--primary) 0deg, var(--primary-light) 180deg, rgba(255,255,255,0.3) 360deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem auto;
+            position: relative;
+            animation: rotateIn 1.5s ease-out forwards;
+        }
+
+        .metric-circle::before {
+            content: '';
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.9);
+            position: absolute;
+        }
+
+        @keyframes rotateIn {
+            from {
+                transform: rotate(-180deg) scale(0.5);
+                opacity: 0;
+            }
+            to {
+                transform: rotate(0deg) scale(1);
+                opacity: 1;
+            }
         }
         
         .stat-label {
@@ -280,8 +327,81 @@
             font-weight: 500;
             letter-spacing: 0.5px;
             text-transform: uppercase;
-        }
-        
+                 }
+
+         /* Social Proof & Testimonials */
+         .testimonial-section {
+             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+             color: white;
+             margin: 3rem 0;
+             padding: 3rem;
+             border-radius: 20px;
+             text-align: center;
+             position: relative;
+             overflow: hidden;
+         }
+
+         .testimonial-section::before {
+             content: '"';
+             position: absolute;
+             top: -20px;
+             left: 50%;
+             transform: translateX(-50%);
+             font-size: 8rem;
+             opacity: 0.1;
+             font-family: 'Playfair Display', serif;
+         }
+
+         .testimonial-quote {
+             font-size: 1.3rem;
+             font-style: italic;
+             line-height: 1.6;
+             margin-bottom: 2rem;
+             position: relative;
+             z-index: 2;
+         }
+
+         .testimonial-author {
+             font-weight: 600;
+             font-size: 1.1rem;
+         }
+
+         .testimonial-role {
+             opacity: 0.8;
+             font-size: 0.9rem;
+             margin-top: 0.5rem;
+         }
+
+         /* Company logos strip */
+         .company-logos {
+             display: flex;
+             justify-content: center;
+             align-items: center;
+             gap: 3rem;
+             padding: 2rem 0;
+             background: rgba(37, 99, 235, 0.05);
+             border-radius: 15px;
+             margin: 2rem 0;
+             flex-wrap: wrap;
+         }
+
+         .company-logo-item {
+             opacity: 0.7;
+             transition: all 0.3s ease;
+             filter: grayscale(100%);
+         }
+
+         .company-logo-item:hover {
+             opacity: 1;
+             transform: scale(1.1);
+             filter: grayscale(0%);
+         }
+
+         .company-logo-item img {
+             height: 40px;
+             width: auto;
+         }
+         
         .contact-info {
             display: flex;
             flex-wrap: wrap;
@@ -302,6 +422,28 @@
         .contact-item:hover {
             opacity: 0.8;
         }
+
+        .download-resume-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: white;
+            color: var(--primary);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 15px rgba(255,255,255,0.3);
+            transition: all 0.3s ease;
+            border: 2px solid white;
+        }
+
+        .download-resume-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255,255,255,0.4);
+            background: var(--bg-light);
+        }
         
         .section {
             background: white;
@@ -313,6 +455,33 @@
             opacity: 0;
             transform: translateY(50px);
             transition: all 0.6s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--gradient);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .section:hover::before {
+            opacity: 1;
+        }
+
+        /* Alternating section backgrounds for visual hierarchy */
+        .section:nth-child(even) {
+            background: linear-gradient(135deg, var(--bg-light) 0%, rgba(37, 99, 235, 0.02) 100%);
+        }
+
+        .section:nth-child(odd) {
+            background: linear-gradient(135deg, #ffffff 0%, rgba(245, 158, 11, 0.02) 100%);
         }
 
         .section.animate {
@@ -1476,6 +1645,236 @@
              font-size: 0.9rem;
              margin-top: 0.5rem;
          }
+
+         /* Work Gallery/Portfolio */
+         .portfolio-gallery {
+             display: grid;
+             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+             gap: 2rem;
+             margin: 2rem 0;
+         }
+
+         .portfolio-item {
+             background: var(--white);
+             border-radius: 16px;
+             overflow: hidden;
+             box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+             transition: all 0.3s ease;
+             border: 1px solid var(--border);
+             opacity: 0;
+             transform: translateY(30px) scale(0.95);
+         }
+
+         .portfolio-item.animate {
+             opacity: 1;
+             transform: translateY(0) scale(1);
+         }
+
+         .portfolio-item:hover {
+             transform: translateY(-8px);
+             box-shadow: 0 20px 40px rgba(37, 99, 235, 0.15);
+         }
+
+         .portfolio-image {
+             width: 100%;
+             height: 200px;
+             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+             display: flex;
+             align-items: center;
+             justify-content: center;
+             color: white;
+             font-size: 3rem;
+             position: relative;
+             overflow: hidden;
+         }
+
+         .portfolio-image::before {
+             content: '';
+             position: absolute;
+             top: 0;
+             left: 0;
+             right: 0;
+             bottom: 0;
+             background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M20 20c0 4.418 3.582 8 8 8s8-3.582 8-8-3.582-8-8-8-8 3.582-8 8zm0-20c0 4.418 3.582 8 8 8s8-3.582 8-8-3.582-8-8-8-8 3.582-8 8z'/%3E%3C/g%3E%3C/svg%3E") repeat;
+         }
+
+         .portfolio-content {
+             padding: 1.5rem;
+         }
+
+         .portfolio-title {
+             font-size: 1.2rem;
+             font-weight: 600;
+             color: var(--primary);
+             margin-bottom: 0.5rem;
+         }
+
+         .portfolio-description {
+             color: var(--text-light);
+             font-size: 0.9rem;
+             line-height: 1.5;
+         }
+
+         .portfolio-tags {
+             display: flex;
+             flex-wrap: wrap;
+             gap: 0.5rem;
+             margin-top: 1rem;
+         }
+
+         .portfolio-tag {
+             background: var(--bg-light);
+             color: var(--primary);
+             padding: 0.3rem 0.8rem;
+             border-radius: 12px;
+             font-size: 0.8rem;
+             font-weight: 500;
+         }
+
+         .portfolio-download {
+             margin-top: 1.5rem;
+             text-align: center;
+         }
+
+         .portfolio-download-btn {
+             display: inline-flex;
+             align-items: center;
+             gap: 0.5rem;
+             background: var(--primary);
+             color: white;
+             padding: 0.8rem 1.5rem;
+             border-radius: 25px;
+             text-decoration: none;
+             font-weight: 600;
+             font-size: 0.9rem;
+             transition: all 0.3s ease;
+             border: none;
+         }
+
+         .portfolio-download-btn:hover {
+             background: var(--primary-light);
+             transform: translateY(-2px);
+             box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+         }
+
+         .portfolio-download-btn.disabled {
+             background: #ccc;
+             cursor: not-allowed;
+         }
+
+         .portfolio-download-btn.disabled:hover {
+             transform: none;
+             box-shadow: none;
+             background: #ccc;
+         }
+
+         /* Call to Action Section */
+         .cta-section {
+             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+             color: white;
+             text-align: center;
+             padding: 4rem 2rem;
+             border-radius: 20px;
+             margin: 3rem 0;
+             position: relative;
+             overflow: hidden;
+         }
+
+         .cta-section::before {
+             content: '';
+             position: absolute;
+             top: 0;
+             left: 0;
+             right: 0;
+             bottom: 0;
+             background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+         }
+
+         .cta-content {
+             position: relative;
+             z-index: 2;
+         }
+
+         .cta-title {
+             font-size: 2.5rem;
+             font-weight: 700;
+             margin-bottom: 1rem;
+             font-family: 'Playfair Display', serif;
+         }
+
+         .cta-subtitle {
+             font-size: 1.2rem;
+             opacity: 0.9;
+             margin-bottom: 2rem;
+             max-width: 600px;
+             margin-left: auto;
+             margin-right: auto;
+         }
+
+         .cta-buttons {
+             display: flex;
+             gap: 1rem;
+             justify-content: center;
+             flex-wrap: wrap;
+         }
+
+         .cta-button {
+             background: white;
+             color: var(--primary);
+             padding: 1rem 2rem;
+             border-radius: 50px;
+             text-decoration: none;
+             font-weight: 600;
+             display: inline-flex;
+             align-items: center;
+             gap: 0.5rem;
+             transition: all 0.3s ease;
+             box-shadow: 0 4px 15px rgba(255,255,255,0.3);
+         }
+
+         .cta-button:hover {
+             transform: translateY(-3px);
+             box-shadow: 0 8px 25px rgba(255,255,255,0.4);
+             background: var(--bg-light);
+         }
+
+         .cta-button.secondary {
+             background: transparent;
+             color: white;
+             border: 2px solid white;
+         }
+
+         .cta-button.secondary:hover {
+             background: white;
+             color: var(--primary);
+         }
+
+         /* Availability badge */
+         .availability-badge {
+             display: inline-flex;
+             align-items: center;
+             gap: 0.5rem;
+             background: rgba(255,255,255,0.1);
+             color: white;
+             padding: 0.5rem 1rem;
+             border-radius: 20px;
+             font-size: 0.9rem;
+             margin-top: 1rem;
+             backdrop-filter: blur(10px);
+         }
+
+         .availability-dot {
+             width: 8px;
+             height: 8px;
+             background: #22c55e;
+             border-radius: 50%;
+             animation: pulse 2s infinite;
+         }
+
+         @keyframes pulse {
+             0%, 100% { opacity: 1; }
+             50% { opacity: 0.5; }
+         }
     </style>
 </head>
  <body>
@@ -1501,9 +1900,6 @@
          </a>
          <a href="#interests" class="nav-item" data-section="interests">
              <i class="fas fa-heart"></i>
-         </a>
-         <a href="#downloads" class="nav-item" data-section="downloads">
-             <i class="fas fa-download"></i>
          </a>
      </nav>
 
@@ -1547,6 +1943,14 @@
                     </div>
                 </div>
                 
+                <!-- Download Resume Button -->
+                <div style="margin: 2rem 0; text-align: center;">
+                    <a href="https://docs.google.com/document/d/1EwT4Undy-gygzDZwzeq85UfPduqyI-CJXc2ByOf-fkc/edit?usp=sharing" target="_blank" class="download-resume-btn">
+                        <i class="fas fa-download"></i>
+                        Download Resume
+                    </a>
+                </div>
+
                 <div class="contact-info">
                     <a href="mailto:yeyucel@gmail.com" class="contact-item">
                         <i class="fas fa-envelope"></i>
@@ -1556,10 +1960,6 @@
                         <i class="fab fa-linkedin"></i>
                         LinkedIn Profile
                     </a>
-                    <div class="contact-item">
-                        <i class="fas fa-phone"></i>
-                        +90 545 803 9901
-                    </div>
                     <div class="contact-item">
                         <i class="fas fa-map-marker-alt"></i>
                         Isparta, Turkey
@@ -1642,7 +2042,7 @@
                     <div class="achievement">
                         <i class="fas fa-rocket achievement-icon"></i>
                         <div class="achievement-text">
-                            Drove 4x usage growth for the "Neuro" product by shifting to a data-driven culture, using PostHog and competitive analysis to guide feature development and strategic decision-making.
+                            Drove <strong>4x usage growth</strong> for the "Neuro" product by shifting to a data-driven culture, using PostHog and competitive analysis to guide feature development and strategic decision-making.
                         </div>
                     </div>
                     <div class="achievement">
@@ -1660,7 +2060,7 @@
                     <div class="achievement">
                         <i class="fas fa-cogs achievement-icon"></i>
                         <div class="achievement-text">
-                            Own the entire product lifecycle for Channels, a platform connecting e-commerce stores with carriers and marketplaces, managing cross-functional teams and stakeholder alignment.
+                            Own the entire product lifecycle for Neuro, a platform connecting e-commerce stores with carriers and marketplaces, managing cross-functional teams and stakeholder alignment.
                         </div>
                     </div>
                 </div>
@@ -1681,7 +2081,7 @@
                     <div class="achievement">
                         <i class="fas fa-tint achievement-icon"></i>
                         <div class="achievement-text">
-                            Managed the Getir Water app and vendor web panel, steering a 100% increase in Monthly Active Users (MAU), conversion, and retention through strategic product discovery initiatives.
+                            Managed the Getir Water app and vendor web panel, steering a <strong>100% increase in Monthly Active Users (MAU)</strong>, conversion, and retention through strategic product discovery initiatives.
                         </div>
                     </div>
                     <div class="achievement">
@@ -1714,7 +2114,7 @@
                     <div class="achievement">
                         <i class="fas fa-globe-americas achievement-icon"></i>
                         <div class="achievement-text">
-                            Managed web platform products aimed at boosting user acquisition, achieving a 50% increase in Turkey and a 500% increase in the US market sign-up rates through effective user experience optimization.
+                            Managed web platform products aimed at boosting user acquisition, achieving a <strong>50% increase in Turkey</strong> and a <strong>500% increase in the US market</strong> sign-up rates through effective user experience optimization.
                         </div>
                     </div>
                     <div class="achievement">
@@ -1875,10 +2275,15 @@
                 </div>
                 
                 <div class="skill-category">
-                    <h4><i class="fas fa-robot"></i> AI Automation</h4>
+                    <h4><i class="fas fa-robot"></i> AI & Automation</h4>
                     <div class="skill-tags">
-                        <span class="skill-tag">Automation Tools</span>
-                        <span class="skill-tag">Prompt Engineering</span>
+                        <span class="skill-tag">Prompting</span>
+                        <span class="skill-tag">AI Automations</span>
+                        <span class="skill-tag">Cursor</span>
+                        <span class="skill-tag">Gemini</span>
+                        <span class="skill-tag">ChatGPT</span>
+                        <span class="skill-tag">Framer</span>
+                        <span class="skill-tag">Figma AI</span>
                     </div>
                 </div>
             </div>
@@ -1977,7 +2382,7 @@
                              <li>Redesigned app user interface with focus on campaigns</li>
                              <li>Streamlined vendor panel for better efficiency</li>
                              <li>Implemented integration between marketplace app and other water brand systems</li>
-                             <li>ımplemented scheduled delivery feature</li>
+                             <li>Implemented scheduled delivery feature</li>
                          </ul>
                      </div>
                      
@@ -2043,7 +2448,7 @@
                              <li><strong>US-Localized Landing Pages:</strong> American educational context and language</li>
                              <li><strong>Refactored Content System:</strong> US standardized test preparation features</li>
                              <li><strong>Single Sign-on Integrations:</strong> US curriculum-aligned study materials</li>
-                             <li><strong>QUestion Asking Flow on Web:</strong> Study groups and peer collaboration tools</li>
+                             <li><strong>Question Asking Flow on Web:</strong> Study groups and peer collaboration tools</li>
                          </ul>
                      </div>
                  </div>
@@ -2075,7 +2480,7 @@
                      <div class="case-study-section">
                          <h4><i class="fas fa-exclamation-triangle"></i> The Challenge</h4>
                          <ul>
-                             <li>Expanding from the Turkish market to the competitive UK home furnishing market</li>
+                             <li>Expanding from Turkish market to competitive UK home furnishing market</li>
                              <li>No existing infrastructure for UK operations and logistics</li>
                              <li>Need for localized payment systems and user experience</li>
                              <li>Complex order management requirements for international shipping</li>
@@ -2148,6 +2553,7 @@
                      <div class="interest-highlights">
                          <span class="highlight-tag">Acoustic Guitar</span>
                          <span class="highlight-tag">Fingerstyle</span>
+                         <span class="highlight-tag">Music Theory</span>
                          <span class="highlight-tag">Live Performance</span>
                      </div>
                  </div>
@@ -2175,58 +2581,39 @@
 
 
 
-         <!-- Download Sections -->
-         <section id="downloads" class="section">
-             <h2 class="section-title">
-                 <i class="fas fa-download"></i> Resources
-             </h2>
-             <div class="download-sections">
-                 <!-- Resume Download -->
-                 <div class="download-card">
-                     <div class="download-icon">
-                         <i class="fas fa-file-pdf"></i>
-                     </div>
-                     <h3 class="download-title">Download My Resume</h3>
-                     <p class="download-description">
-                         Get a comprehensive PDF version of my resume with all experience, skills, and achievements in a traditional format perfect for sharing.
-                     </p>
-                     <a href="https://docs.google.com/document/d/1EwT4Undy-gygzDZwzeq85UfPduqyI-CJXc2ByOf-fkc/edit?usp=sharing" target="_blank" class="download-button">
-                         <i class="fas fa-download"></i>
-                         Download PDF Resume
+
+
+
+
+         <!-- Call to Action Section -->
+         <div class="cta-section">
+             <div class="cta-content">
+                 <h2 class="cta-title">Let's Talk</h2>
+                 <p class="cta-subtitle">
+                     I'm open to both B2C and B2B Product Manager roles across Europe, with remote or hybrid options. Ready to bring data-driven product strategy to your team.
+                 </p>
+                 <div class="cta-buttons">
+                     <a href="mailto:yeyucel@gmail.com" class="cta-button">
+                         <i class="fas fa-envelope"></i>
+                         Email Me
+                     </a>
+                     <a href="https://linkedin.com/in/yeyucel" target="_blank" class="cta-button secondary">
+                         <i class="fab fa-linkedin"></i>
+                         Connect on LinkedIn
+                     </a>
+                     <a href="https://calendly.com/yeyucel" target="_blank" class="cta-button secondary">
+                         <i class="fas fa-calendar"></i>
+                         Schedule a Chat
                      </a>
                  </div>
-                 
-                 <!-- Case Studies Download -->
-                 <div class="download-card">
-                     <div class="download-icon">
-                         <i class="fas fa-briefcase"></i>
-                     </div>
-                     <h3 class="download-title">How I Work - Case Studies</h3>
-                     <p class="download-description">
-                         Access detailed case studies and examples from my job applications showing my process, methodology, and real-world problem-solving approach.
-                     </p>
-                     <a href="https://docs.google.com/document/d/17vB4cUyUOkU5MfFCSbhcnmkLm_uwoOabszFJyg52s_g/edit?usp=sharing" target="_blank" class="download-button">
-                         <i class="fas fa-download"></i>
-                         Download Work Examples
-                     </a>
-                 </div>
-                 
-                 <!-- GitHub Tools -->
-                 <div class="download-card">
-                     <div class="download-icon">
-                         <i class="fab fa-github"></i>
-                     </div>
-                     <h3 class="download-title">PM Automation Tools</h3>
-                     <p class="download-description">
-                         Check out the Jira-Notion MCP tool I created to automate my PM workflows at The Despatch Company. Open source project showcasing practical AI integration.
-                     </p>
-                     <a href="https://github.com/yeyucel/jira-notion-mcp-tool" target="_blank" class="download-button">
-                         <i class="fab fa-github"></i>
-                         View GitHub Repository
-                     </a>
+                 <div class="availability-badge">
+                     <div class="availability-dot"></div>
+                     Available for immediate start • EU/Remote
                  </div>
              </div>
-         </section>
+         </div>
+
+
      </div>
 
      <script>
@@ -2340,12 +2727,20 @@
                                  card.classList.add('animate');
                              }, index * 250);
                          });
+
+                         // Animate portfolio items with delay
+                         const portfolioItems = entry.target.querySelectorAll('.portfolio-item');
+                         portfolioItems.forEach((item, index) => {
+                             setTimeout(() => {
+                                 item.classList.add('animate');
+                             }, index * 200);
+                         });
                      }
                  });
              }, observerOptions);
 
              // Observe all sections
-             document.querySelectorAll('.section, .case-study, .interest-card, .approach-item, .download-card').forEach(section => {
+             document.querySelectorAll('.section, .case-study, .interest-card, .approach-item, .download-card, .portfolio-item').forEach(section => {
                  observer.observe(section);
              });
 
