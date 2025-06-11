@@ -44,35 +44,49 @@
          }
      </script>
      
-     <!-- Google Tag Manager -->
-     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-     j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-     })(window,document,'script','dataLayer','GTM-K2WHDBF4');</script>
-          <!-- End Google Tag Manager -->
+          <!-- Google Tag Manager - Deferred for performance -->
+     <script>
+     // Defer GTM loading until after page load
+     window.addEventListener('load', function() {
+         setTimeout(function() {
+             (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+             new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+             j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+             'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+             })(window,document,'script','dataLayer','GTM-K2WHDBF4');
+         }, 1000);
+     });
+     </script>
+     <!-- End Google Tag Manager -->
      
      <!-- Preload critical resources -->
      <link rel="preconnect" href="https://fonts.googleapis.com">
      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
      <link rel="preconnect" href="https://cdnjs.cloudflare.com">
      
-     <!-- Load fonts with display=swap for better performance -->
-     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+     <!-- Load fonts with display=swap for better performance - make non-blocking -->
+     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+     <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
      
-     <!-- Load Font Awesome asynchronously -->
-     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+     <!-- Fallback fonts to prevent layout shift -->
+     <style>
+         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+         .name { font-family: Georgia, 'Times New Roman', serif; }
+     </style>
+     
+     <!-- Load only essential Font Awesome icons -->
+     <script>
+     // Load Font Awesome after critical content
+     window.addEventListener('load', function() {
+         var link = document.createElement('link');
+         link.rel = 'stylesheet';
+         link.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css';
+         document.head.appendChild(link);
+     });
+     </script>
      <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-                 html {
-             scroll-behavior: smooth;
-         }
+                *{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
 
          /* Performance optimization: reduce paint and layout operations */
          * {
@@ -393,11 +407,14 @@
         }
         
         .name {
-            font-family: 'Playfair Display', serif;
+            font-family: 'Playfair Display', Georgia, serif;
             font-size: 3.5rem;
             font-weight: 700;
             margin-bottom: 0.5rem;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            /* Optimize for LCP */
+            contain: layout style;
+            text-rendering: optimizeSpeed;
         }
         
         .tagline {
@@ -1467,7 +1484,10 @@
              top: 50%;
              transform: translateY(-50%);
              font-size: 12px;
-             transition: all 0.3s ease;
+             transition: opacity 0.3s ease;
+             /* Use GPU acceleration for better performance */
+             will-change: opacity;
+             backface-visibility: hidden;
          }
 
          .theme-toggle .sun-icon {
@@ -2211,7 +2231,7 @@
              50% { opacity: 0.5; }
          }
 
-         /* Loading Screen */
+         /* Loading Screen - optimized to prevent layout shifts */
          .loading-screen {
              position: fixed;
              top: 0;
@@ -2224,7 +2244,9 @@
              align-items: center;
              justify-content: center;
              opacity: 1;
-             transition: opacity 0.5s ease;
+             transition: opacity 0.3s ease;
+             /* Prevent any layout shifts */
+             contain: layout style paint;
          }
 
          .loading-screen.hidden {
@@ -3063,14 +3085,10 @@
 
      <script>
          document.addEventListener('DOMContentLoaded', function() {
-             // Hide loading screen faster for better performance
+             // Hide loading screen immediately for better performance
              const loadingScreen = document.getElementById('loading-screen');
-             setTimeout(() => {
-                 loadingScreen.classList.add('hidden');
-                 setTimeout(() => {
-                     loadingScreen.style.display = 'none';
-                 }, 300);
-             }, 500);
+             // Remove loading screen faster to improve LCP
+             loadingScreen.style.display = 'none';
 
              // Mobile navigation functionality
              const mobileNav = document.getElementById('mobile-nav');
