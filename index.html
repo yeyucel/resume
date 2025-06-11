@@ -1098,25 +1098,14 @@
         .skill-tag {
             opacity: 1;
             transform: scale(1);
-            animation: skillPop 0.4s ease forwards;
+            /* No animation on page load */
         }
 
         .skill-tag:hover {
             background: var(--primary);
             color: white;
             transform: translateY(-3px) scale(1.05);
-                         box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);
-        }
-
-        @keyframes skillPop {
-            from {
-                opacity: 0;
-                transform: scale(0.8);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
+            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);
         }
         
         .summary {
@@ -1329,60 +1318,19 @@
         }
         
         .fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 0.6s ease forwards;
-        }
-        
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            opacity: 1;
+            transform: translateY(0);
+            /* No animation on page load */
         }
 
-        /* Enhanced Header Animations */
+        /* Enhanced Header Animations - Removed auto-play animations */
         .header-content {
-            animation: slideInFromTop 1s ease-out;
-        }
-
-        @keyframes slideInFromTop {
-            from {
-                opacity: 0;
-                transform: translateY(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            /* No animation on page load */
         }
 
         .stat {
-            animation: bounceIn 0.8s ease forwards;
             opacity: 1;
-        }
-
-        .stat:nth-child(1) { animation-delay: 0.2s; }
-        .stat:nth-child(2) { animation-delay: 0.4s; }
-        .stat:nth-child(3) { animation-delay: 0.6s; }
-        .stat:nth-child(4) { animation-delay: 0.8s; }
-
-        @keyframes bounceIn {
-            0% {
-                opacity: 0;
-                transform: scale(0.3);
-            }
-            50% {
-                opacity: 1;
-                transform: scale(1.05);
-            }
-            70% {
-                transform: scale(0.9);
-            }
-            100% {
-                opacity: 1;
-                transform: scale(1);
-            }
+            /* No animation on page load */
         }
 
         /* Case Study Enhanced Animations */
@@ -2756,91 +2704,10 @@
              top: 6px;
          }
 
-         /* Modern Section Highlight Effect */
+         /* Modern Section Highlight Effect - Removed animations */
          .section-highlighted {
              position: relative;
-             animation: modernHighlight 3s ease-in-out;
-         }
-
-         .section-highlighted::before {
-             content: '';
-             position: absolute;
-             top: -4px;
-             left: -4px;
-             right: -4px;
-             bottom: -4px;
-             background: linear-gradient(45deg, 
-                 var(--primary), 
-                 var(--primary-light), 
-                 var(--accent), 
-                 var(--primary), 
-                 var(--primary-light)
-             );
-             background-size: 400% 400%;
-             border-radius: 24px;
-             z-index: -1;
-             animation: gradientShift 2s ease-in-out infinite;
-             opacity: 0.8;
-         }
-
-         .section-highlighted::after {
-             content: '';
-             position: absolute;
-             top: -8px;
-             left: -8px;
-             right: -8px;
-             bottom: -8px;
-             background: radial-gradient(circle, rgba(37, 99, 235, 0.1) 0%, transparent 70%);
-             border-radius: 28px;
-             z-index: -2;
-             animation: pulseGlow 2s ease-in-out infinite;
-         }
-
-         @keyframes modernHighlight {
-             0% {
-                 transform: translateY(0) scale(1);
-                 filter: brightness(1);
-             }
-             20% {
-                 transform: translateY(-2px) scale(1.005);
-                 filter: brightness(1.1);
-             }
-             80% {
-                 transform: translateY(-2px) scale(1.005);
-                 filter: brightness(1.1);
-             }
-             100% {
-                 transform: translateY(0) scale(1);
-                 filter: brightness(1);
-             }
-         }
-
-         @keyframes gradientShift {
-             0% {
-                 background-position: 0% 50%;
-             }
-             50% {
-                 background-position: 100% 50%;
-             }
-             100% {
-                 background-position: 0% 50%;
-             }
-         }
-
-         @keyframes pulseGlow {
-             0%, 100% {
-                 opacity: 0.1;
-                 transform: scale(1);
-             }
-             50% {
-                 opacity: 0.2;
-                 transform: scale(1.02);
-             }
-         }
-
-         /* Ensure highlighted sections stay above other elements */
-         .section-highlighted {
-             z-index: 10;
+             /* No animation on page load */
          }
     </style>
 </head>
