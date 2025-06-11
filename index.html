@@ -2380,24 +2380,24 @@
                  <p class="tagline">Senior Product Manager</p>
                 
                 <div class="header-stats">
-                    <div class="stat">
+                    <div class="stat" onclick="highlightSection('experience')">
                         <i class="fas fa-calendar-alt stat-icon"></i>
-                        <span class="stat-number">5+</span>
+                        <span class="stat-number counter" data-target="5">0</span><span class="stat-number">+</span>
                         <span class="stat-label">Years Experience</span>
                     </div>
-                    <div class="stat">
+                    <div class="stat" onclick="highlightSection('case-studies')">
                         <i class="fas fa-rocket stat-icon"></i>
-                        <span class="stat-number">4x</span>
+                        <span class="stat-number counter" data-target="4">0</span><span class="stat-number">x</span>
                         <span class="stat-label">Product Growth</span>
                     </div>
-                    <div class="stat">
+                    <div class="stat" onclick="highlightSection('case-studies')">
                         <i class="fas fa-globe-americas stat-icon"></i>
-                        <span class="stat-number">500%</span>
+                        <span class="stat-number counter" data-target="500">0</span><span class="stat-number">%</span>
                         <span class="stat-label">Market Expansion</span>
                     </div>
-                    <div class="stat">
+                    <div class="stat" onclick="highlightSection('case-studies')">
                         <i class="fas fa-heart stat-icon"></i>
-                        <span class="stat-number">99%</span>
+                        <span class="stat-number counter" data-target="99">0</span><span class="stat-number">%</span>
                         <span class="stat-label">Customer Satisfaction</span>
                     </div>
                 </div>
@@ -3326,6 +3326,60 @@
              });
 
 
+
+             // Animated counters
+             function animateCounters() {
+                 const counters = document.querySelectorAll('.counter');
+                 const speed = 200; // Lower = faster
+                 
+                 counters.forEach(counter => {
+                     const target = +counter.getAttribute('data-target');
+                     let count = 0;
+                     const increment = target / speed;
+                     
+                     const updateCount = () => {
+                         if (count < target) {
+                             count += increment;
+                             counter.innerText = Math.ceil(count);
+                             setTimeout(updateCount, 1);
+                         } else {
+                             counter.innerText = target;
+                         }
+                     };
+                     
+                     updateCount();
+                 });
+             }
+             
+             // Section highlighting function
+             window.highlightSection = function(sectionId) {
+                 const section = document.getElementById(sectionId);
+                 section.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                 
+                 // Add highlight effect
+                 section.style.transform = 'scale(1.02)';
+                 section.style.boxShadow = '0 20px 60px rgba(37, 99, 235, 0.2)';
+                 
+                 setTimeout(() => {
+                     section.style.transform = '';
+                     section.style.boxShadow = '';
+                 }, 2000);
+             };
+
+             // Start counter animation when stats come into view
+             const statsObserver = new IntersectionObserver(function(entries) {
+                 entries.forEach(entry => {
+                     if (entry.isIntersecting) {
+                         animateCounters();
+                         statsObserver.unobserve(entry.target);
+                     }
+                 });
+             }, { threshold: 0.5 });
+             
+             const headerStats = document.querySelector('.header-stats');
+             if (headerStats) {
+                 statsObserver.observe(headerStats);
+             }
 
              // Initial calls
              updateProgress();
