@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#2563eb">
+    <meta name="color-scheme" content="light dark">
     <title>Yunus Emre Yücel - Senior Product Manager | 4x Growth Expert | B2B & B2C</title>
     <meta name="description" content="Senior Product Manager with 5+ years driving 4x product growth. Expert in data-driven product strategy, international expansion (500% US growth), and cross-functional team leadership.">
     <meta name="keywords" content="Product Manager, Senior Product Manager, Product Strategy, Data-Driven Growth, International Expansion, B2B, B2C, Turkey, Europe">
@@ -48,10 +50,19 @@
      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
      })(window,document,'script','dataLayer','GTM-K2WHDBF4');</script>
-     <!-- End Google Tag Manager -->
+          <!-- End Google Tag Manager -->
      
+     <!-- Preload critical resources -->
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+     
+     <!-- Load fonts with display=swap for better performance -->
      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+     
+     <!-- Load Font Awesome asynchronously -->
+     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
     <style>
         * {
             margin: 0;
@@ -59,9 +70,27 @@
             box-sizing: border-box;
         }
 
-        html {
-            scroll-behavior: smooth;
-        }
+                 html {
+             scroll-behavior: smooth;
+         }
+
+         /* Performance optimization: reduce paint and layout operations */
+         * {
+             -webkit-font-smoothing: antialiased;
+             -moz-osx-font-smoothing: grayscale;
+         }
+
+         /* Optimize animations for better performance */
+         @media (prefers-reduced-motion: reduce) {
+             *,
+             *::before,
+             *::after {
+                 animation-duration: 0.01ms !important;
+                 animation-iteration-count: 1 !important;
+                 transition-duration: 0.01ms !important;
+                 scroll-behavior: auto !important;
+             }
+         }
         
         :root {
             --primary: #2563eb;
@@ -1472,6 +1501,9 @@
              padding: 6px;
              border: 1px solid var(--border);
              margin-right: 1rem;
+             /* Prevent layout shifts */
+             aspect-ratio: 1;
+             display: block;
          }
 
          .company-link {
@@ -2443,7 +2475,7 @@
                                      <div class="experience-item">
                 <div class="company-header">
                     <div class="company-info" style="display: flex; align-items: center;">
-                        <img src="https://145683546.fs1.hubspotusercontent-eu1.net/hubfs/145683546/The_Despatch_Company_Logo-1.svg" alt="The Despatch Company Logo" class="company-logo" onerror="this.src='https://thedespatchcompany.com/favicon.ico'">
+                        <img src="https://145683546.fs1.hubspotusercontent-eu1.net/hubfs/145683546/The_Despatch_Company_Logo-1.svg" alt="The Despatch Company Logo" class="company-logo" loading="lazy" onerror="this.src='https://thedespatchcompany.com/favicon.ico'">
                         <div>
                             <h3><a href="https://thedespatchcompany.com/" target="_blank" class="company-link">The Despatch Company</a></h3>
                             <div class="role">Senior Product Manager</div>
@@ -2482,7 +2514,7 @@
                                      <div class="experience-item">
                 <div class="company-header">
                     <div class="company-info" style="display: flex; align-items: center;">
-                        <img src="https://logo.clearbit.com/getir.com" alt="Getir Logo" class="company-logo" onerror="this.style.display='none'">
+                        <img src="https://logo.clearbit.com/getir.com" alt="Getir Logo" class="company-logo" loading="lazy" onerror="this.style.display='none'">
                         <div>
                             <h3><a href="https://getir.com/" target="_blank" class="company-link">Getir</a></h3>
                             <div class="role">Product Manager</div>
@@ -2515,7 +2547,7 @@
                                      <div class="experience-item">
                 <div class="company-header">
                     <div class="company-info" style="display: flex; align-items: center;">
-                        <img src="https://logo.clearbit.com/kunduz.com" alt="Kunduz Logo" class="company-logo" onerror="this.style.display='none'">
+                        <img src="https://logo.clearbit.com/kunduz.com" alt="Kunduz Logo" class="company-logo" loading="lazy" onerror="this.style.display='none'">
                         <div>
                             <h3><a href="https://kunduz.com/" target="_blank" class="company-link">Kunduz</a></h3>
                             <div class="role">Product Manager</div>
@@ -2548,7 +2580,7 @@
                                      <div class="experience-item">
                 <div class="company-header">
                     <div class="company-info" style="display: flex; align-items: center;">
-                        <img src="https://logo.clearbit.com/vivense.com" alt="Vivense Logo" class="company-logo" onerror="this.style.display='none'">
+                        <img src="https://logo.clearbit.com/vivense.com" alt="Vivense Logo" class="company-logo" loading="lazy" onerror="this.style.display='none'">
                         <div>
                             <h3><a href="https://www.vivense.com/" target="_blank" class="company-link">Vivense</a></h3>
                             <div class="role">Product Owner</div>
@@ -2581,7 +2613,7 @@
             <div class="experience-item">
                 <div class="company-header">
                     <div class="company-info" style="display: flex; align-items: center;">
-                        <img src="https://logo.clearbit.com/peoplise.com" alt="Peoplise Logo" class="company-logo" onerror="this.style.display='none'">
+                        <img src="https://logo.clearbit.com/peoplise.com" alt="Peoplise Logo" class="company-logo" loading="lazy" onerror="this.style.display='none'">
                         <div>
                             <h3><a href="https://peoplise.com/" target="_blank" class="company-link">Peoplise</a></h3>
                             <div class="role">Junior Product Manager</div>
@@ -3031,14 +3063,14 @@
 
      <script>
          document.addEventListener('DOMContentLoaded', function() {
-             // Hide loading screen
+             // Hide loading screen faster for better performance
              const loadingScreen = document.getElementById('loading-screen');
              setTimeout(() => {
                  loadingScreen.classList.add('hidden');
                  setTimeout(() => {
                      loadingScreen.style.display = 'none';
-                 }, 500);
-             }, 1000);
+                 }, 300);
+             }, 500);
 
              // Mobile navigation functionality
              const mobileNav = document.getElementById('mobile-nav');
@@ -3133,23 +3165,27 @@
                  });
              });
 
-             // Intersection Observer for animations
+             // Intersection Observer for animations - optimized for performance
              const observerOptions = {
                  threshold: 0.1,
                  rootMargin: '0px 0px -50px 0px'
              };
+
+             // Check if user prefers reduced motion
+             const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
              const observer = new IntersectionObserver(function(entries) {
                  entries.forEach(entry => {
                      if (entry.isIntersecting) {
                          entry.target.classList.add('animate');
                          
-                         // Animate achievements with delay
+                         // Animate achievements with delay (respect motion preferences)
                          const achievements = entry.target.querySelectorAll('.achievement');
                          achievements.forEach((achievement, index) => {
+                             const delay = prefersReducedMotion ? 0 : index * 200;
                              setTimeout(() => {
                                  achievement.classList.add('animate');
-                             }, index * 200);
+                             }, delay);
                          });
 
                          // Animate skill tags with delay
