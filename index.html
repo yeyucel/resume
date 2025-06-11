@@ -1601,20 +1601,23 @@
              text-decoration: underline;
          }
 
-         /* Case Study Styles */
-         .case-study {
-             background: var(--bg-light);
+         /* Case Study Styles - Mobile First Approach */
+         .case-studies-container {
+             display: flex;
+             flex-direction: column;
+             gap: 1.5rem;
+         }
+
+         .case-study-card {
+             background: var(--white);
              border: 1px solid var(--border);
              border-radius: 16px;
-             padding: 2rem;
-             margin: 2rem 0;
              transition: all 0.3s ease;
-             cursor: pointer;
              position: relative;
              overflow: hidden;
          }
 
-         .case-study::before {
+         .case-study-card::before {
              content: '';
              position: absolute;
              top: 0;
@@ -1626,135 +1629,188 @@
              transition: opacity 0.3s ease;
          }
 
-         .case-study:hover {
+         .case-study-card:hover::before {
+             opacity: 1;
+         }
+
+         .case-study-card:hover {
              transform: translateY(-2px);
              box-shadow: 0 8px 25px rgba(37, 99, 235, 0.15);
              border-color: var(--primary);
          }
 
-         .case-study:hover::before {
-             opacity: 1;
-         }
-
          .case-study-header {
              display: flex;
-             align-items: center;
+             align-items: flex-start;
              gap: 1rem;
-             margin-bottom: 2rem;
+             padding: 1.5rem;
              cursor: pointer;
              position: relative;
          }
 
-
-
          .case-study-icon {
-             width: 60px;
-             height: 60px;
+             width: 50px;
+             height: 50px;
              border-radius: 12px;
              background: var(--primary);
              display: flex;
              align-items: center;
              justify-content: center;
              color: white;
-             font-size: 1.5rem;
+             font-size: 1.2rem;
+             flex-shrink: 0;
+         }
+
+         .case-study-info {
+             flex: 1;
+             min-width: 0;
          }
 
          .case-study-title {
-             font-size: 1.3rem;
+             font-size: 1.2rem;
              font-weight: 600;
              color: var(--primary);
              margin-bottom: 0.5rem;
+             line-height: 1.3;
+         }
+
+         .case-study-meta {
              display: flex;
+             flex-wrap: wrap;
+             gap: 0.5rem;
              align-items: center;
-             gap: 1rem;
+             margin-bottom: 0.75rem;
          }
 
-         .case-study-title::after {
-             content: '▼';
-             font-size: 1rem;
-             color: var(--primary);
-             transition: transform 0.3s ease;
-             margin-left: auto;
-         }
-
-         .case-study.expanded .case-study-title::after {
-             transform: rotate(180deg);
-         }
-
-         .case-study-subtitle {
-             color: var(--text-light);
+         .case-study-meta .company {
+             color: var(--text-dark);
+             font-weight: 500;
              font-size: 0.9rem;
+         }
+
+         .case-study-meta .period {
+             color: var(--text-light);
+             font-size: 0.85rem;
+             background: var(--bg-light);
+             padding: 0.2rem 0.6rem;
+             border-radius: 12px;
          }
 
          .case-study-preview {
              color: var(--text-light);
-             font-size: 1rem;
-             margin-top: 1rem;
+             font-size: 0.95rem;
              line-height: 1.5;
-             font-style: italic;
+             margin: 0;
+         }
+
+         .expand-button {
+             color: var(--primary);
+             font-size: 1rem;
+             transition: transform 0.3s ease;
+             padding: 0.5rem;
+             flex-shrink: 0;
+         }
+
+         .case-study-card.expanded .expand-button {
+             transform: rotate(180deg);
          }
 
          .case-study-content {
              max-height: 0;
              overflow: hidden;
-             transition: max-height 0.5s ease, opacity 0.3s ease;
+             transition: max-height 0.4s ease, opacity 0.3s ease;
              opacity: 0;
+             border-top: 1px solid var(--border);
          }
 
-         .case-study.expanded .case-study-content {
+         .case-study-card.expanded .case-study-content {
              max-height: 2000px;
              opacity: 1;
          }
 
-         .case-study-grid {
-             display: grid;
-             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-             gap: 2rem;
-             margin-top: 2rem;
-         }
-
-         @media (max-width: 768px) {
-             .case-study-grid {
-                 display: block !important;
-                 margin-top: 1rem !important;
-             }
+         .case-study-sections {
+             padding: 1.5rem;
+             display: flex;
+             flex-direction: column;
+             gap: 1.5rem;
          }
 
          .case-study-section {
-             background: var(--white);
-             padding: 1.5rem;
+             background: var(--bg-light);
+             padding: 1.25rem;
              border-radius: 12px;
              border: 1px solid var(--border);
          }
 
-         .case-study-section h4 {
-             color: var(--primary);
-             font-size: 1.1rem;
-             font-weight: 600;
-             margin-bottom: 1rem;
+         .section-header {
              display: flex;
              align-items: center;
              gap: 0.5rem;
+             margin-bottom: 1rem;
+         }
+
+         .section-header i {
+             color: var(--primary);
+             font-size: 1rem;
+         }
+
+         .section-header h4 {
+             color: var(--primary);
+             font-size: 1rem;
+             font-weight: 600;
+             margin: 0;
              font-family: 'Inter', sans-serif;
          }
 
-         .case-study-section ul {
+         .challenge-list, .approach-list {
              list-style: none;
              padding: 0;
+             margin: 0;
          }
 
-         .case-study-section li {
-             margin-bottom: 0.5rem;
-             padding-left: 1.5rem;
+         .challenge-list li, .approach-list li {
+             margin-bottom: 0.75rem;
+             padding-left: 1.25rem;
              position: relative;
+             line-height: 1.5;
+             color: var(--text-dark);
          }
 
-         .case-study-section li::before {
-             content: '▶';
+         .challenge-list li::before {
+             content: '●';
              position: absolute;
              left: 0;
              color: var(--primary);
              font-size: 0.8rem;
+             top: 0.1rem;
+         }
+
+         .approach-list li::before {
+             content: '▶';
+             position: absolute;
+             left: 0;
+             color: var(--primary);
+             font-size: 0.7rem;
+             top: 0.15rem;
+         }
+
+         .features-grid {
+             display: grid;
+             grid-template-columns: 1fr;
+             gap: 0.75rem;
+         }
+
+         .feature-item {
+             background: var(--white);
+             padding: 1rem;
+             border-radius: 8px;
+             border: 1px solid var(--border);
+             line-height: 1.4;
+             color: var(--text-dark);
+         }
+
+         .feature-item strong {
+             color: var(--primary);
          }
 
          .result-highlight {
@@ -1763,16 +1819,89 @@
              padding: 1.5rem;
              border-radius: 12px;
              margin-top: 1rem;
+             text-align: center;
          }
 
-         @media (max-width: 768px) {
+         .result-metric {
+             font-size: 1.5rem;
+             font-weight: 700;
+             margin-bottom: 0.5rem;
+         }
+
+         .result-description {
+             opacity: 0.95;
+             line-height: 1.5;
+         }
+
+         /* Desktop Improvements */
+         @media (min-width: 769px) {
+             .case-study-header {
+                 padding: 2rem;
+             }
+
+             .case-study-icon {
+                 width: 60px;
+                 height: 60px;
+                 font-size: 1.4rem;
+             }
+
+             .case-study-title {
+                 font-size: 1.4rem;
+             }
+
+             .case-study-preview {
+                 font-size: 1rem;
+             }
+
+             .case-study-sections {
+                 padding: 2rem;
+                 display: grid;
+                 grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                 gap: 2rem;
+             }
+
+             .features-grid {
+                 grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                 gap: 1rem;
+             }
+
              .result-highlight {
-                 position: static !important;
-                 margin-top: 2rem !important;
-                 margin-bottom: 2rem !important;
-                 clear: both !important;
-                 width: 100% !important;
-                 display: block !important;
+                 grid-column: 1 / -1;
+                 margin-top: 2rem;
+             }
+
+             .result-metric {
+                 font-size: 2rem;
+             }
+         }
+
+         /* Mobile specific adjustments */
+         @media (max-width: 768px) {
+             .case-study-header {
+                 padding: 1.25rem;
+             }
+
+             .case-study-title {
+                 font-size: 1.1rem;
+                 line-height: 1.4;
+             }
+
+             .case-study-meta {
+                 flex-direction: column;
+                 align-items: flex-start;
+                 gap: 0.25rem;
+             }
+
+             .case-study-sections {
+                 padding: 1.25rem;
+             }
+
+             .case-study-section {
+                 padding: 1rem;
+             }
+
+             .result-metric {
+                 font-size: 1.3rem;
              }
          }
 
@@ -1805,7 +1934,7 @@
              color: var(--text-light);
          }
 
-         [data-theme="dark"] .case-study {
+         [data-theme="dark"] .case-study-card {
              background: rgba(59, 130, 246, 0.06);
              border-color: rgba(59, 130, 246, 0.15);
          }
@@ -1815,11 +1944,12 @@
              border-color: rgba(100, 116, 139, 0.2);
          }
 
-         [data-theme="dark"] .case-study-section h4 {
+         [data-theme="dark"] .section-header h4 {
              color: var(--primary-light);
          }
 
-         [data-theme="dark"] .case-study-section li {
+         [data-theme="dark"] .challenge-list li,
+         [data-theme="dark"] .approach-list li {
              color: var(--text-light);
          }
 
@@ -1827,8 +1957,22 @@
              color: var(--text-dark);
          }
 
-         [data-theme="dark"] .case-study-subtitle {
+         [data-theme="dark"] .case-study-meta .company {
+             color: var(--text-dark);
+         }
+
+         [data-theme="dark"] .case-study-preview {
              color: var(--text-light);
+         }
+
+         [data-theme="dark"] .feature-item {
+             background: rgba(100, 116, 139, 0.08);
+             border-color: rgba(100, 116, 139, 0.2);
+             color: var(--text-light);
+         }
+
+         [data-theme="dark"] .feature-item strong {
+             color: var(--primary-light);
          }
 
          [data-theme="dark"] .section-title {
@@ -2989,288 +3133,415 @@
                  <i class="fas fa-microscope"></i> Detailed Case Studies
              </h2>
              
-             <!-- Despatch Company Case Study -->
-             <div class="case-study">
-                 <div class="case-study-header">
-                     <div class="case-study-icon">
-                         <i class="fas fa-rocket"></i>
-                     </div>
-                     <div>
-                         <div class="case-study-title">Neuro Product: 4x Growth Through Data-Driven Culture</div>
-                         <div class="case-study-subtitle">The Despatch Company • 2023-2024</div>
-                         <div class="case-study-preview">Transformed product development culture by implementing analytics and competitive intelligence, driving 4x usage growth.</div>
-                     </div>
-                 </div>
+             <!-- Case Studies Container -->
+             <div class="case-studies-container">
                  
-                 <div class="case-study-content">
-                     <div class="case-study-grid">
-                     <div class="case-study-section">
-                         <h4><i class="fas fa-exclamation-triangle"></i> The Challenge</h4>
-                         <ul>
-                             <li>Neuro product had stagnant user engagement</li>
-                             <li>Development decisions were based on assumptions rather than data</li>
-                             <li>No competitive intelligence framework in place</li>
-                             <li>Team lacked clear metrics for success</li>
-                         </ul>
+                 <!-- Case Study 1: The Despatch Company -->
+                 <div class="case-study-card">
+                     <div class="case-study-header" onclick="toggleCaseStudy(this)">
+                         <div class="case-study-icon">
+                             <i class="fas fa-rocket"></i>
+                         </div>
+                         <div class="case-study-info">
+                             <h3 class="case-study-title">Neuro Product: 4x Growth Through Data-Driven Culture</h3>
+                             <div class="case-study-meta">
+                                 <span class="company">The Despatch Company</span>
+                                 <span class="period">2023-2024</span>
+                             </div>
+                             <p class="case-study-preview">Transformed product development culture by implementing analytics and competitive intelligence, driving 4x usage growth.</p>
+                         </div>
+                         <div class="expand-button">
+                             <i class="fas fa-chevron-down"></i>
+                         </div>
                      </div>
                      
-                     <div class="case-study-section">
-                         <h4><i class="fas fa-lightbulb"></i> My Approach</h4>
-                         <ul>
-                             <li>Implemented PostHog analytics for comprehensive user behavior tracking</li>
-                             <li>Established competitive analysis framework with quarterly reviews</li>
-                             <li>Created data-driven feature prioritization process</li>
-                             <li>Introduced Test-Driven Development (TDD) practices</li>
-                             <li>Built proactive monitoring systems for early issue detection</li>
-                         </ul>
-                     </div>
-                     
-                     <div class="case-study-section">
-                         <h4><i class="fas fa-cogs"></i> Key Features Implemented</h4>
-                         <ul>
-                             <li><strong>Advanced Analytics Dashboard:</strong> Real-time user behavior insights</li>
-                             <li><strong>Predictive Monitoring:</strong> Automated alerts for potential issues</li>
-                             <li><strong>A/B Testing Framework:</strong> Systematic feature validation</li>
-                             <li><strong>User Feedback Loop:</strong> Direct customer input integration</li>
-                         </ul>
-                     </div>
-                 </div>
-                 
-                     <div class="result-highlight">
-                         <div class="result-metric">4x Product Usage Growth</div>
-                         <div class="result-description">
-                             Successfully transformed product development culture, resulting in measurable user engagement improvements and significantly reduced bug rates through proactive monitoring.
+                     <div class="case-study-content">
+                         <div class="case-study-sections">
+                             
+                             <div class="case-study-section challenge">
+                                 <div class="section-header">
+                                     <i class="fas fa-exclamation-triangle"></i>
+                                     <h4>The Challenge</h4>
+                                 </div>
+                                 <ul class="challenge-list">
+                                     <li>Neuro product had stagnant user engagement</li>
+                                     <li>Development decisions were based on assumptions rather than data</li>
+                                     <li>No competitive intelligence framework in place</li>
+                                     <li>Team lacked clear metrics for success</li>
+                                 </ul>
+                             </div>
+                             
+                             <div class="case-study-section approach">
+                                 <div class="section-header">
+                                     <i class="fas fa-lightbulb"></i>
+                                     <h4>My Approach</h4>
+                                 </div>
+                                 <ul class="approach-list">
+                                     <li>Implemented PostHog analytics for comprehensive user behavior tracking</li>
+                                     <li>Established competitive analysis framework with quarterly reviews</li>
+                                     <li>Created data-driven feature prioritization process</li>
+                                     <li>Introduced Test-Driven Development (TDD) practices</li>
+                                     <li>Built proactive monitoring systems for early issue detection</li>
+                                 </ul>
+                             </div>
+                             
+                             <div class="case-study-section features">
+                                 <div class="section-header">
+                                     <i class="fas fa-cogs"></i>
+                                     <h4>Key Features Implemented</h4>
+                                 </div>
+                                 <div class="features-grid">
+                                     <div class="feature-item">
+                                         <strong>Advanced Analytics Dashboard:</strong> Real-time user behavior insights
+                                     </div>
+                                     <div class="feature-item">
+                                         <strong>Predictive Monitoring:</strong> Automated alerts for potential issues
+                                     </div>
+                                     <div class="feature-item">
+                                         <strong>A/B Testing Framework:</strong> Systematic feature validation
+                                     </div>
+                                     <div class="feature-item">
+                                         <strong>User Feedback Loop:</strong> Direct customer input integration
+                                     </div>
+                                 </div>
+                             </div>
+                             
+                         </div>
+                         
+                         <div class="result-highlight">
+                             <div class="result-metric">4x Product Usage Growth</div>
+                             <div class="result-description">
+                                 Successfully transformed product development culture, resulting in measurable user engagement improvements and significantly reduced bug rates through proactive monitoring.
+                             </div>
                          </div>
                      </div>
                  </div>
-             </div>
 
-             <!-- Getir Case Study -->
-             <div class="case-study">
-                 <div class="case-study-header">
-                     <div class="case-study-icon">
-                         <i class="fas fa-tint"></i>
-                     </div>
-                     <div>
-                         <div class="case-study-title">Getir Water: 100% MAU Growth Through UX Redesign</div>
-                         <div class="case-study-subtitle">Getir • 2022-2023</div>
-                         <div class="case-study-preview">Doubled monthly active users by redesigning the water delivery app and vendor panel, improving conversion and retention.</div>
-                     </div>
-                 </div>
-                 
-                 <div class="case-study-content">
-                     <div class="case-study-grid">
-                     <div class="case-study-section">
-                         <h4><i class="fas fa-exclamation-triangle"></i> The Challenge</h4>
-                         <ul>
-                             <li>Poor user experience in water marketplace app homepage</li>
-                             <li>Complex and inefficient vendor management system</li>
-                             <li>Low conversion rates from app visits to orders</li>
-                             <li>High customer support tickets due to usability issues</li>
-                         </ul>
+                 <!-- Case Study 2: Getir -->
+                 <div class="case-study-card">
+                     <div class="case-study-header" onclick="toggleCaseStudy(this)">
+                         <div class="case-study-icon">
+                             <i class="fas fa-tint"></i>
+                         </div>
+                         <div class="case-study-info">
+                             <h3 class="case-study-title">Getir Water: 100% MAU Growth Through UX Redesign</h3>
+                             <div class="case-study-meta">
+                                 <span class="company">Getir</span>
+                                 <span class="period">2022-2023</span>
+                             </div>
+                             <p class="case-study-preview">Doubled monthly active users by redesigning the water delivery app and vendor panel, improving conversion and retention.</p>
+                         </div>
+                         <div class="expand-button">
+                             <i class="fas fa-chevron-down"></i>
+                         </div>
                      </div>
                      
-                     <div class="case-study-section">
-                         <h4><i class="fas fa-lightbulb"></i> My Approach</h4>
-                         <ul>
-                             <li>Conducted comprehensive user research and analytics review</li>
-                             <li>Redesigned app user interface with focus on campaigns</li>
-                             <li>Streamlined vendor panel for better efficiency</li>
-                             <li>Implemented integration between marketplace app and other water brand systems</li>
-                             <li>Implemented scheduled delivery feature</li>
-                         </ul>
-                     </div>
-                     
-                     <div class="case-study-section">
-                         <h4><i class="fas fa-cogs"></i> Key Features Implemented</h4>
-                         <ul>
-                             <li><strong>One-Click Reordering:</strong> Simplified repeat purchase flow</li>
-                             <li><strong>Scheduled Delivery Scheduling:</strong> AI-powered optimal delivery times</li>
-                             <li><strong>Vendor Dashboard Redesign:</strong> Intuitive order management interface</li>
-                             <li><strong>Integrations with Water Brand ERP Systems:</strong> Enhanced customer visibility</li>
-                         </ul>
-                     </div>
-                 </div>
-                 
-                     <div class="result-highlight">
-                         <div class="result-metric">100% MAU Increase</div>
-                         <div class="result-description">
-                             Doubled monthly active users while improving conversion rates by 85% and user retention by 120% through strategic UX improvements and vendor experience optimization.
+                     <div class="case-study-content">
+                         <div class="case-study-sections">
+                             
+                             <div class="case-study-section challenge">
+                                 <div class="section-header">
+                                     <i class="fas fa-exclamation-triangle"></i>
+                                     <h4>The Challenge</h4>
+                                 </div>
+                                 <ul class="challenge-list">
+                                     <li>Poor user experience in water marketplace app homepage</li>
+                                     <li>Complex and inefficient vendor management system</li>
+                                     <li>Low conversion rates from app visits to orders</li>
+                                     <li>High customer support tickets due to usability issues</li>
+                                 </ul>
+                             </div>
+                             
+                             <div class="case-study-section approach">
+                                 <div class="section-header">
+                                     <i class="fas fa-lightbulb"></i>
+                                     <h4>My Approach</h4>
+                                 </div>
+                                 <ul class="approach-list">
+                                     <li>Conducted comprehensive user research and analytics review</li>
+                                     <li>Redesigned app user interface with focus on campaigns</li>
+                                     <li>Streamlined vendor panel for better efficiency</li>
+                                     <li>Implemented integration between marketplace app and other water brand systems</li>
+                                     <li>Implemented scheduled delivery feature</li>
+                                 </ul>
+                             </div>
+                             
+                             <div class="case-study-section features">
+                                 <div class="section-header">
+                                     <i class="fas fa-cogs"></i>
+                                     <h4>Key Features Implemented</h4>
+                                 </div>
+                                 <div class="features-grid">
+                                     <div class="feature-item">
+                                         <strong>One-Click Reordering:</strong> Simplified repeat purchase flow
+                                     </div>
+                                     <div class="feature-item">
+                                         <strong>Scheduled Delivery:</strong> AI-powered optimal delivery times
+                                     </div>
+                                     <div class="feature-item">
+                                         <strong>Vendor Dashboard Redesign:</strong> Intuitive order management interface
+                                     </div>
+                                     <div class="feature-item">
+                                         <strong>ERP System Integrations:</strong> Enhanced customer visibility
+                                     </div>
+                                 </div>
+                             </div>
+                             
+                         </div>
+                         
+                         <div class="result-highlight">
+                             <div class="result-metric">100% MAU Increase</div>
+                             <div class="result-description">
+                                 Doubled monthly active users while improving conversion rates by 85% and user retention by 120% through strategic UX improvements and vendor experience optimization.
+                             </div>
                          </div>
                      </div>
                  </div>
-             </div>
 
-             <!-- Kunduz Case Study -->
-             <div class="case-study">
-                 <div class="case-study-header">
-                     <div class="case-study-icon">
-                         <i class="fas fa-globe-americas"></i>
-                     </div>
-                     <div>
-                         <div class="case-study-title">US Market Expansion: 5x Monthly Signups Growth</div>
-                         <div class="case-study-subtitle">Kunduz • 2021-2022</div>
-                         <div class="case-study-preview">Played a significant part in international expansion into the US market, achieving 5x monthly signups growth through localization and SEO optimization.</div>
-                     </div>
-                 </div>
-                 
-                 <div class="case-study-content">
-                     <div class="case-study-grid">
-                     <div class="case-study-section">
-                         <h4><i class="fas fa-exclamation-triangle"></i> The Challenge</h4>
-                         <ul>
-                             <li>Low user acquisition in the US market</li>
-                             <li>Poor SEO performance for American search queries</li>
-                             <li>Low sign-up conversion rates from US traffic</li>
-                             <li>Limited understanding of US student behavior and preferences</li>
-                         </ul>
+                 <!-- Case Study 3: Kunduz -->
+                 <div class="case-study-card">
+                     <div class="case-study-header" onclick="toggleCaseStudy(this)">
+                         <div class="case-study-icon">
+                             <i class="fas fa-globe-americas"></i>
+                         </div>
+                         <div class="case-study-info">
+                             <h3 class="case-study-title">US Market Expansion: 5x Monthly Signups Growth</h3>
+                             <div class="case-study-meta">
+                                 <span class="company">Kunduz</span>
+                                 <span class="period">2021-2022</span>
+                             </div>
+                             <p class="case-study-preview">Played a significant part in international expansion into the US market, achieving 5x monthly signups growth through localization and SEO optimization.</p>
+                         </div>
+                         <div class="expand-button">
+                             <i class="fas fa-chevron-down"></i>
+                         </div>
                      </div>
                      
-                     <div class="case-study-section">
-                         <h4><i class="fas fa-lightbulb"></i> My Approach</h4>
-                         <ul>
-                             <li>Conducted extensive US market research and user interviews</li>
-                             <li>Implemented comprehensive SEO strategy for US-specific keywords</li>
-                             <li>Redesigned user experience for American educational preferences</li>
-                             <li>Created localized content strategy and marketing materials</li>
-                             <li>Optimized conversion funnels based on US user behavior</li>
-                         </ul>
-                     </div>
-                     
-                     <div class="case-study-section">
-                         <h4><i class="fas fa-cogs"></i> Key Features Implemented</h4>
-                         <ul>
-                             <li><strong>US-Localized Landing Pages:</strong> American educational context and language</li>
-                             <li><strong>Refactored Content System:</strong> US standardized test preparation features</li>
-                             <li><strong>Single Sign-on Integrations:</strong> US curriculum-aligned study materials</li>
-                             <li><strong>Question Asking Flow on Web:</strong> Study groups and peer collaboration tools</li>
-                         </ul>
-                     </div>
-                 </div>
-                 
-                     <div class="result-highlight">
-                         <div class="result-metric">5x Monthly Signups Growth</div>
-                         <div class="result-description">
-                             Achieved remarkable international expansion with 50% increase in Turkey sign-up rates as well, significantly improved organic search rankings, and established strong foothold in the competitive US education market.
+                     <div class="case-study-content">
+                         <div class="case-study-sections">
+                             
+                             <div class="case-study-section challenge">
+                                 <div class="section-header">
+                                     <i class="fas fa-exclamation-triangle"></i>
+                                     <h4>The Challenge</h4>
+                                 </div>
+                                 <ul class="challenge-list">
+                                     <li>Low user acquisition in the US market</li>
+                                     <li>Poor SEO performance for American search queries</li>
+                                     <li>Low sign-up conversion rates from US traffic</li>
+                                     <li>Limited understanding of US student behavior and preferences</li>
+                                 </ul>
+                             </div>
+                             
+                             <div class="case-study-section approach">
+                                 <div class="section-header">
+                                     <i class="fas fa-lightbulb"></i>
+                                     <h4>My Approach</h4>
+                                 </div>
+                                 <ul class="approach-list">
+                                     <li>Conducted extensive US market research and user interviews</li>
+                                     <li>Implemented comprehensive SEO strategy for US-specific keywords</li>
+                                     <li>Redesigned user experience for American educational preferences</li>
+                                     <li>Created localized content strategy and marketing materials</li>
+                                     <li>Optimized conversion funnels based on US user behavior</li>
+                                 </ul>
+                             </div>
+                             
+                             <div class="case-study-section features">
+                                 <div class="section-header">
+                                     <i class="fas fa-cogs"></i>
+                                     <h4>Key Features Implemented</h4>
+                                 </div>
+                                 <div class="features-grid">
+                                     <div class="feature-item">
+                                         <strong>US-Localized Landing Pages:</strong> American educational context and language
+                                     </div>
+                                     <div class="feature-item">
+                                         <strong>Refactored Content System:</strong> US standardized test preparation features
+                                     </div>
+                                     <div class="feature-item">
+                                         <strong>SSO Integrations:</strong> US curriculum-aligned study materials
+                                     </div>
+                                     <div class="feature-item">
+                                         <strong>Question Flow on Web:</strong> Study groups and peer collaboration tools
+                                     </div>
+                                 </div>
+                             </div>
+                             
+                         </div>
+                         
+                         <div class="result-highlight">
+                             <div class="result-metric">5x Monthly Signups Growth</div>
+                             <div class="result-description">
+                                 Achieved remarkable international expansion with 50% increase in Turkey sign-up rates as well, significantly improved organic search rankings, and established strong foothold in the competitive US education market.
+                             </div>
                          </div>
                      </div>
                  </div>
-             </div>
 
-             <!-- Vivense Case Study -->
-             <div class="case-study">
-                 <div class="case-study-header">
-                     <div class="case-study-icon">
-                         <i class="fas fa-rocket"></i>
-                     </div>
-                     <div>
-                         <div class="case-study-title">VivenseLondon Launch: International E-Commerce Expansion</div>
-                         <div class="case-study-subtitle">Vivense • 2020-2021</div>
-                         <div class="case-study-preview">Successfully launched UK e-commerce platform with complete logistics integration and localized payment solutions.</div>
-                     </div>
-                 </div>
-                 
-                 <div class="case-study-content">
-                     <div class="case-study-grid">
-                     <div class="case-study-section">
-                         <h4><i class="fas fa-exclamation-triangle"></i> The Challenge</h4>
-                         <ul>
-                             <li>Expanding from Turkish market to competitive UK home furnishing market</li>
-                             <li>No existing infrastructure for UK operations and logistics</li>
-                             <li>Need for localized payment systems and user experience</li>
-                             <li>Complex order management requirements for international shipping</li>
-                         </ul>
+                 <!-- Case Study 4: Vivense -->
+                 <div class="case-study-card">
+                     <div class="case-study-header" onclick="toggleCaseStudy(this)">
+                         <div class="case-study-icon">
+                             <i class="fas fa-shopping-cart"></i>
+                         </div>
+                         <div class="case-study-info">
+                             <h3 class="case-study-title">VivenseLondon Launch: International E-Commerce Expansion</h3>
+                             <div class="case-study-meta">
+                                 <span class="company">Vivense</span>
+                                 <span class="period">2020-2021</span>
+                             </div>
+                             <p class="case-study-preview">Successfully launched UK e-commerce platform with complete logistics integration and localized payment solutions.</p>
+                         </div>
+                         <div class="expand-button">
+                             <i class="fas fa-chevron-down"></i>
+                         </div>
                      </div>
                      
-                     <div class="case-study-section">
-                         <h4><i class="fas fa-lightbulb"></i> My Approach</h4>
-                         <ul>
-                             <li>Led cross-functional collaboration with marketing and logistics teams</li>
-                             <li>Developed comprehensive go-to-market strategy for UK launch</li>
-                             <li>Managed product backlog with focus on MVP delivery timeline</li>
-                             <li>Collaborated with engineering teams on technical feasibility assessments</li>
-                             <li>Ensured alignment between business goals and stakeholder expectations</li>
-                         </ul>
-                     </div>
-                     
-                     <div class="case-study-section">
-                         <h4><i class="fas fa-cogs"></i> Key Features Implemented</h4>
-                         <ul>
-                             <li><strong>Order Management System:</strong> Complete UK logistics integration</li>
-                             <li><strong>Stripe Payment Integration:</strong> Localized payment solutions for UK market</li>
-                             <li><strong>Shopping Cart System:</strong> Optimized basket service for international shipping</li>
-                             <li><strong>Back-office Tools:</strong> Admin panel for UK-specific operations</li>
-                             <li><strong>Marketing Campaign Tool:</strong> Refactored system for UK market campaigns</li>
-                         </ul>
-                     </div>
-                 </div>
-                 
-                     <div class="result-highlight">
-                         <div class="result-metric">Successful UK Market Entry</div>
-                         <div class="result-description">
-                             Successfully launched VivenseLondon.co.uk on time and on budget, establishing strong foundation for Vivense's international expansion with complete e-commerce infrastructure.
+                     <div class="case-study-content">
+                         <div class="case-study-sections">
+                             
+                             <div class="case-study-section challenge">
+                                 <div class="section-header">
+                                     <i class="fas fa-exclamation-triangle"></i>
+                                     <h4>The Challenge</h4>
+                                 </div>
+                                 <ul class="challenge-list">
+                                     <li>Expanding from Turkish market to competitive UK home furnishing market</li>
+                                     <li>No existing infrastructure for UK operations and logistics</li>
+                                     <li>Need for localized payment systems and user experience</li>
+                                     <li>Complex order management requirements for international shipping</li>
+                                 </ul>
+                             </div>
+                             
+                             <div class="case-study-section approach">
+                                 <div class="section-header">
+                                     <i class="fas fa-lightbulb"></i>
+                                     <h4>My Approach</h4>
+                                 </div>
+                                 <ul class="approach-list">
+                                     <li>Led cross-functional collaboration with marketing and logistics teams</li>
+                                     <li>Developed comprehensive go-to-market strategy for UK launch</li>
+                                     <li>Managed product backlog with focus on MVP delivery timeline</li>
+                                     <li>Collaborated with engineering teams on technical feasibility assessments</li>
+                                     <li>Ensured alignment between business goals and stakeholder expectations</li>
+                                 </ul>
+                             </div>
+                             
+                             <div class="case-study-section features">
+                                 <div class="section-header">
+                                     <i class="fas fa-cogs"></i>
+                                     <h4>Key Features Implemented</h4>
+                                 </div>
+                                 <div class="features-grid">
+                                     <div class="feature-item">
+                                         <strong>Order Management System:</strong> Complete UK logistics integration
+                                     </div>
+                                     <div class="feature-item">
+                                         <strong>Stripe Payment Integration:</strong> Localized payment solutions for UK market
+                                     </div>
+                                     <div class="feature-item">
+                                         <strong>Shopping Cart System:</strong> Optimized basket service for international shipping
+                                     </div>
+                                     <div class="feature-item">
+                                         <strong>Admin Panel & Marketing Tools:</strong> UK-specific operations management
+                                     </div>
+                                 </div>
+                             </div>
+                             
+                         </div>
+                         
+                         <div class="result-highlight">
+                             <div class="result-metric">Successful UK Market Entry</div>
+                             <div class="result-description">
+                                 Successfully launched VivenseLondon.co.uk on time and on budget, establishing strong foundation for Vivense's international expansion with complete e-commerce infrastructure.
+                             </div>
                          </div>
                      </div>
                  </div>
-             </div>
 
-             <!-- People Harmonise Case Study -->
-             <div class="case-study">
-                 <div class="case-study-header">
-                     <div class="case-study-icon">
-                         <i class="fas fa-users"></i>
-                     </div>
-                     <div>
-                         <div class="case-study-title">Harmonise Product: Employee Onboarding Platform That Drove Company Exit</div>
-                         <div class="case-study-subtitle">Peoplise • 2019</div>
-                         <div class="case-study-preview">Led market research, MVP development, and product creation that became a key factor in company growth and successful exit to major Turkish enterprises.</div>
-                     </div>
-                 </div>
-                 
-                 <div class="case-study-content">
-                     <div class="case-study-grid">
-                     <div class="case-study-section">
-                         <h4><i class="fas fa-exclamation-triangle"></i> The Challenge</h4>
-                         <ul>
-                             <li>Existing employee onboarding tool was too basic and didn't meet customer needs</li>
-                             <li>Growing market demand for comprehensive onboarding solutions</li>
-                             <li>Companies had diverse requirements that our current product wasn't addressing</li>
-                             <li>Competitive landscape was rapidly evolving with new feature expectations</li>
-                         </ul>
+                 <!-- Case Study 5: Peoplise -->
+                 <div class="case-study-card">
+                     <div class="case-study-header" onclick="toggleCaseStudy(this)">
+                         <div class="case-study-icon">
+                             <i class="fas fa-users"></i>
+                         </div>
+                         <div class="case-study-info">
+                             <h3 class="case-study-title">Harmonise Product: Employee Onboarding Platform That Drove Company Exit</h3>
+                             <div class="case-study-meta">
+                                 <span class="company">Peoplise</span>
+                                 <span class="period">2019</span>
+                             </div>
+                             <p class="case-study-preview">Led market research, MVP development, and product creation that became a key factor in company growth and successful exit to major Turkish enterprises.</p>
+                         </div>
+                         <div class="expand-button">
+                             <i class="fas fa-chevron-down"></i>
+                         </div>
                      </div>
                      
-                     <div class="case-study-section">
-                         <h4><i class="fas fa-lightbulb"></i> My Approach</h4>
-                         <ul>
-                             <li>Conducted intensive market research and competitive analysis globally</li>
-                             <li>Analyzed features and competitive advantages of existing solutions</li>
-                             <li>Identified easy customization and competitive pricing as our market differentiators</li>
-                             <li>Designed MVP structure and feature prioritization with development team</li>
-                             <li>Created detailed wireframes to communicate product vision</li>
-                             <li>Managed product development using Scrum framework</li>
-                         </ul>
-                     </div>
-                     
-                     <div class="case-study-section">
-                         <h4><i class="fas fa-cogs"></i> Key Features Implemented</h4>
-                         <ul>
-                             <li><strong>Customizable Onboarding Flows:</strong> Easy and fast customization for different company needs</li>
-                             <li><strong>Competitive Pricing Model:</strong> Market-disrupting pricing strategy</li>
-                             <li><strong>Scalable Architecture:</strong> Built to handle enterprise-level requirements</li>
-                             <li><strong>User-Centric Design:</strong> Wireframed with focus on ease of use and efficiency</li>
-                         </ul>
-                     </div>
-
-
-                 </div>
-                 
-                     <div class="result-highlight">
-                         <div class="result-metric">Company Exit Success</div>
-                         <div class="result-description">
-                             Harmonise product became a key growth driver leading to successful company exit. Now used by major companies across Turkey, establishing strong market presence in employee onboarding solutions.
+                     <div class="case-study-content">
+                         <div class="case-study-sections">
+                             
+                             <div class="case-study-section challenge">
+                                 <div class="section-header">
+                                     <i class="fas fa-exclamation-triangle"></i>
+                                     <h4>The Challenge</h4>
+                                 </div>
+                                 <ul class="challenge-list">
+                                     <li>Existing employee onboarding tool was too basic and didn't meet customer needs</li>
+                                     <li>Growing market demand for comprehensive onboarding solutions</li>
+                                     <li>Companies had diverse requirements that our current product wasn't addressing</li>
+                                     <li>Competitive landscape was rapidly evolving with new feature expectations</li>
+                                 </ul>
+                             </div>
+                             
+                             <div class="case-study-section approach">
+                                 <div class="section-header">
+                                     <i class="fas fa-lightbulb"></i>
+                                     <h4>My Approach</h4>
+                                 </div>
+                                 <ul class="approach-list">
+                                     <li>Conducted intensive market research and competitive analysis globally</li>
+                                     <li>Analyzed features and competitive advantages of existing solutions</li>
+                                     <li>Identified easy customization and competitive pricing as our market differentiators</li>
+                                     <li>Designed MVP structure and feature prioritization with development team</li>
+                                     <li>Created detailed wireframes to communicate product vision</li>
+                                     <li>Managed product development using Scrum framework</li>
+                                 </ul>
+                             </div>
+                             
+                             <div class="case-study-section features">
+                                 <div class="section-header">
+                                     <i class="fas fa-cogs"></i>
+                                     <h4>Key Features Implemented</h4>
+                                 </div>
+                                 <div class="features-grid">
+                                     <div class="feature-item">
+                                         <strong>Customizable Onboarding Flows:</strong> Easy and fast customization for different company needs
+                                     </div>
+                                     <div class="feature-item">
+                                         <strong>Competitive Pricing Model:</strong> Market-disrupting pricing strategy
+                                     </div>
+                                     <div class="feature-item">
+                                         <strong>Scalable Architecture:</strong> Built to handle enterprise-level requirements
+                                     </div>
+                                     <div class="feature-item">
+                                         <strong>User-Centric Design:</strong> Wireframed with focus on ease of use and efficiency
+                                     </div>
+                                 </div>
+                             </div>
+                             
+                         </div>
+                         
+                         <div class="result-highlight">
+                             <div class="result-metric">Company Exit Success</div>
+                             <div class="result-description">
+                                 Harmonise product became a key growth driver leading to successful company exit. Now used by major companies across Turkey, establishing strong market presence in employee onboarding solutions.
+                             </div>
                          </div>
                      </div>
                  </div>
+
              </div>
          </section>
 
@@ -3529,7 +3800,7 @@
              }, observerOptions);
 
              // Observe all sections
-             document.querySelectorAll('.section, .case-study, .interest-card, .approach-item, .download-card, .portfolio-item').forEach(section => {
+             document.querySelectorAll('.section, .case-study-card, .interest-card, .approach-item, .download-card, .portfolio-item').forEach(section => {
                  observer.observe(section);
              });
 
@@ -3579,13 +3850,11 @@
                  });
              });
 
-             // Case study toggle functionality
-             document.querySelectorAll('.case-study-header').forEach(header => {
-                 header.addEventListener('click', function() {
-                     const caseStudy = this.closest('.case-study');
-                     caseStudy.classList.toggle('expanded');
-                 });
-             });
+             // Case study toggle functionality - updated for new structure
+             window.toggleCaseStudy = function(header) {
+                 const caseStudyCard = header.closest('.case-study-card');
+                 caseStudyCard.classList.toggle('expanded');
+             };
 
              // Scroll event listeners
              window.addEventListener('scroll', function() {
