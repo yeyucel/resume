@@ -404,26 +404,6 @@
         .header-content {
             position: relative;
             z-index: 2;
-            display: flex;
-            align-items: center;
-            gap: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .profile-photo {
-            width: 180px;
-            height: 180px;
-            border-radius: 50%;
-            object-fit: cover;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            flex-shrink: 0;
-        }
-
-        .header-info { flex: 1; }
-
-        @media (max-width: 768px) {
-            .header-content { flex-direction: column; text-align: center; }
-            .profile-photo { width: 140px; height: 140px; }
         }
         
         .name {
@@ -2395,11 +2375,9 @@
 
      <header class="header">
          <div class="container">
-            <div class="header-content">
-                <img src="https://yunusemreyucel.com/og-image.jpg" alt="Yunus Emre Yücel portrait" class="profile-photo" loading="lazy">
-                <div class="header-info">
-                    <h1 class="name">Yunus Emre Yücel</h1>
-                    <p class="tagline">Senior Product Manager</p>
+             <div class="header-content">
+                 <h1 class="name">Yunus Emre Yücel</h1>
+                 <p class="tagline">Senior Product Manager</p>
                 
                 <div class="header-stats">
                     <div class="stat" onclick="highlightSection('experience')">
@@ -2423,7 +2401,7 @@
                         <span class="stat-label">Customer Satisfaction</span>
                     </div>
                 </div>
-
+                
                 <!-- Quick Contact Buttons -->
                 <div class="header-cta">
                     <a href="mailto:yeyucel@gmail.com" class="cta-button-header primary">
@@ -2454,7 +2432,6 @@
                         Isparta, Turkey
                     </div>
                 </div>
-            </div>
             </div>
         </div>
     </header>
